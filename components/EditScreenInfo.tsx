@@ -5,7 +5,6 @@ import Colors from '../constants/Colors';
 import { ExternalLink } from './ExternalLink';
 import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
-import Dropdown from 'C:/Users/Diana/CNUEngage/TCE/TCEngage/src/Dropdown.js';
 
 export default function EditScreenInfo({ path }: { path: string }) {
   return (
@@ -15,30 +14,17 @@ export default function EditScreenInfo({ path }: { path: string }) {
           style={styles.getStartedText}
           lightColor="rgba(0,0,0,0.8)"
           darkColor="rgba(255,255,255,0.8)">
-          Open up the code for this screen:
+          This application is still in development.
         </Text>
 
-        <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          darkColor="rgba(255,255,255,0.05)"
-          lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
-        </View>
-
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)">
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
       </View>
 
       <View style={styles.helpContainer}>
         <ExternalLink
           style={styles.helpLink}
-          href="https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet">
+          href="lastdistopia@gmail.com">
           <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-            Tap here if your app doesn't automatically update after making changes
+          Please report any bugs that interfere with your experience here.
           </Text>
         </ExternalLink>
       </View>

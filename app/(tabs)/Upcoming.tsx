@@ -1,20 +1,14 @@
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import DropdownFiller from '../(functions)/DropdownFiller';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-import Dropdown from '../../src/Dropdown';
-
-export default function TabOneScreen() {
+const Upcoming: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Theater CNU Engage!</Text>
-      <Dropdown></Dropdown>
-
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <DropdownFiller type={2} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -32,3 +26,5 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+
+export default Upcoming;

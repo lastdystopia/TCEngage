@@ -1,19 +1,41 @@
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import DropdownFiller from '../(functions)/DropdownFiller';
+import Interact from '../(interact)/Interact';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+const CurrentEventScreen: React.FC = () => {
+  const navigation = useNavigation();
 
-export default function TabTwoScreen() {
+  const goToForm = () => {
+    console.log("Going to interactive screen");
+    // navigation.navigate('InteractiveScreen');
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <Text>Current Screen Content YARRRRRR</Text>
+        <DropdownFiller type={0} />
+
+        <Interact
+        questions={[
+          { Type: 0, question: 'Type your answer', onChange: (text: string) => console.log(text) },
+          { Type: 2, question: 'Is it true or false?', onChange: (value: boolean) => console.log(value) },
+          { Type: 3, question: 'Rate this question', onChange: (rating: number) => console.log(rating) },
+          { Type: 1, question: 'Select options', options: ['Option 1', 'Option 2', 'Option 3'], onChange: (checkedItems: boolean[]) => console.log(checkedItems) },
+          { Type: 4, question: 'Choose one', options: ['Option A', 'Option B', 'Option C'], onChange: (selectedOption: string) => console.log(selectedOption) },
+        ]}
+      />
+      </View>
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -29,3 +51,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+
+export default CurrentEventScreen;
+
+
