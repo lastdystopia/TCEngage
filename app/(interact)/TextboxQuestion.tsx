@@ -2,14 +2,14 @@ import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 
 interface TextboxQuestionProps {
-  question: string;
+  Question: string;
   onChange: (text: string) => void;
 }
 
-const TextboxQuestion: React.FC<TextboxQuestionProps> = ({ question, onChange }) => {
+const TextboxQuestion: React.FC<TextboxQuestionProps> = ({ Question, onChange }) => {
   return (
     <View>
-      <Text>{question}</Text>
+      <Text>{Question}</Text>
       <TextInput
         style={styles.input}
         onChangeText={(text) => onChange(text)}

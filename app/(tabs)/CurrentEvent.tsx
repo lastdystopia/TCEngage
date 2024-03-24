@@ -15,16 +15,17 @@ const CurrentEventScreen: React.FC = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <Text>Current Screen Content YARRRRRR</Text>
+        <Text>Current Screen Content</Text>
         <DropdownFiller type={0} />
+
 
         <Interact
         questions={[
-          { Type: 0, question: 'Type your answer', onChange: (text: string) => console.log(text) },
-          { Type: 2, question: 'Is it true or false?', onChange: (value: boolean) => console.log(value) },
-          { Type: 3, question: 'Rate this question', onChange: (rating: number) => console.log(rating) },
-          { Type: 1, question: 'Select options', options: ['Option 1', 'Option 2', 'Option 3'], onChange: (checkedItems: boolean[]) => console.log(checkedItems) },
-          { Type: 4, question: 'Choose one', options: ['Option A', 'Option B', 'Option C'], onChange: (selectedOption: string) => console.log(selectedOption) },
+          { Type: 0, Title: 'Type your answer', onChange: (text: string) => console.log(text) },
+          { Type: 2, Title: 'Is it true or false?', onChange: (value: boolean) => console.log(value) },
+          { Type: 3, Title: 'Rate this question', onChange: (rating: number) => console.log(rating) },
+          { Type: 1, Title: 'Select options', options: ['Option 1', 'Option 2', 'Option 3'], onChange: (checkedItems: boolean[]) => console.log(checkedItems) },
+          { Type: 4, Title: 'Choose one', options: ['Option A', 'Option B', 'Option C'], onChange: (selectedOption: string) => console.log(selectedOption) },
         ]}
       />
       </View>

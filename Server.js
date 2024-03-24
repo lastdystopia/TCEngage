@@ -1,8 +1,14 @@
 const express = require('express');
 const mysql = require('mysql2');
+//const bodyParser = require('body-parser');
+//const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 3001;
+
+// Middleware
+//app.use(bodyParser.json());
+//app.use(cors());
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -22,7 +28,8 @@ connection.connect((err) => {
 
 // Function to pull data from PerformanceInfo table
 app.get('/performanceInfo', (req, res) => {
-  connection.query('SELECT * FROM PerformanceInfo', (error, results, fields) => {
+  console.log("Trynna getch");
+  connection.query('SELECT * FROM PerformanceInfo', (error, results) => {
     if (error) throw error;
     res.json(results);
   });
@@ -30,7 +37,7 @@ app.get('/performanceInfo', (req, res) => {
 
 // Function to pull data from ShowCharacter table
 app.get('/showCharacter', (req, res) => {
-  connection.query('SELECT * FROM ShowCharacter', (error, results, fields) => {
+  connection.query('SELECT * FROM ShowCharacter', (error, results) => {
     if (error) throw error;
     res.json(results);
   });
@@ -39,7 +46,11 @@ app.get('/showCharacter', (req, res) => {
 // Function to pull data from Question table
 app.get('/question', (req, res) => {
   connection.query('SELECT * FROM Question', (error, results, fields) => {
-    if (error) throw error;
+    if (error) {
+      console.error('Error fetching questions:', error);
+      res.status(500).send('Error fetching questions');
+      return;
+    }
     res.json(results);
   });
 });
@@ -49,7 +60,11 @@ app.post('/engagementInfo', (req, res) => {
   const { title, question, response } = req.body;
   const query = 'INSERT INTO EngagementInfo (Title, Question, Response) VALUES (?, ?, ?)';
   connection.query(query, [title, question, response], (error, results, fields) => {
-    if (error) throw error;
+    if (error) {
+      console.error('Error inserting data:', error);
+      res.status(500).send('Error inserting data');
+      return;
+    }
     res.json({ message: 'Data inserted successfully' });
   });
 });

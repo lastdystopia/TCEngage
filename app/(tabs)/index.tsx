@@ -3,11 +3,13 @@ import { StyleSheet, ScrollView } from 'react-native';
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import Dropdown from '../(functions)/Dropdown';
+import FetchButton from '../../FetchPerformanceInfoButton';
 export default function IndexScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to Theater CNU Engage!</Text>
+      <FetchButton />
       <Dropdown
   title="Romeo and Juliet"
   startDate="02/14/1597"

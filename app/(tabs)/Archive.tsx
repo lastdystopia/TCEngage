@@ -8,8 +8,6 @@ const Archive: React.FC = () => {
       <Text>Archive Screen Content</Text>
       <View>
       <DropdownFiller type={1} />
-        
-
       </View>
     </View>
   );

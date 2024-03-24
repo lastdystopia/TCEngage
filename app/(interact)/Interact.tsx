@@ -3,14 +3,43 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Question from './Question';
 
 interface InteractProps {
-  questions: { Type: number; question: string; options?: string[]; onChange: (value: any) => void }[];
+  questions: { Type: number; Title: string; options?: string[]; onChange: (value: any) => void }[];
 }
 
 const Interact: React.FC<InteractProps> = ({ questions }) => {
   const [showThanks, setShowThanks] = useState(false);
+  const [responses, setResponses] = useState<{ Title: string; Question: string; Response: string }[]>([]);
 
   const handleSubmit = () => {
-    setShowThanks(true);
+    // Collect responses from each question
+    const collectedResponses = questions.map((question) => ({
+      Title: question.Title,
+      Question: question.Title,
+      Response: question.onChange.toString(), 
+    }));
+
+    // Send responses to the backend
+    console.log("tryna send to backend");
+    fetch('http://192.168.11.115:3001/performanceInfo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(collectedResponses),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setShowThanks(true);
+        
+          setResponses([]);
+        } else {
+          throw new Error('Failed to submit responses');
+        }
+      })
+      .catch((error) => {
+        console.error('Error submitting responses:', error);
+        // Handle error as needed
+      });
   };
 
   if (!questions || questions.length === 0) {
@@ -33,7 +62,7 @@ const Interact: React.FC<InteractProps> = ({ questions }) => {
     <View style={styles.container}>
       {questions.map((question, index) => (
         <View key={index} style={styles.questionContainer}>
-          <Question {...question} />
+          <Question Type={question.Type} question={question.Title} options={question.options} onChange={question.onChange} />
         </View>
       ))}
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
@@ -42,6 +71,7 @@ const Interact: React.FC<InteractProps> = ({ questions }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -79,4 +109,3 @@ const styles = StyleSheet.create({
 });
 
 export default Interact;
-

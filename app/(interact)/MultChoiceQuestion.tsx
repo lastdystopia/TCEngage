@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface MultChoiceQuestionProps {
-  question: string;
+  Question: string;
   options: string[];
   onChange: (selectedOption: string | null) => void;
 }
 
-const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ question, options, onChange }) => {
+const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ Question, options, onChange }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleOptionPress = (option: string) => {
@@ -30,7 +30,7 @@ const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ question, optio
 
   return (
     <View>
-      <Text>{question}</Text>
+      <Text>{Question}</Text>
       <View style={styles.optionsContainer}>
         {options.map((option) => renderOptionButton(option))}
       </View>

@@ -3,19 +3,17 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { CheckBox } from '@rneui/themed';
 
 interface CheckboxQuestionProps {
-  question: string;
-  options: string[];
-  onChange: (checkedItems: boolean[]) => void;
+  Question: string;
+  QuestionOptions: string[];
 }
 
-const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({ question, options, onChange }) => {
-  const [checkedItems, setCheckedItems] = useState<boolean[]>(new Array(options.length).fill(false));
+const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({ Question, QuestionOptions }) => {
+  const [checkedItems, setCheckedItems] = useState<boolean[]>(new Array(QuestionOptions.length).fill(false));
 
   const handleCheckboxPress = (index: number) => {
     const updatedCheckedItems = [...checkedItems];
     updatedCheckedItems[index] = !updatedCheckedItems[index];
     setCheckedItems(updatedCheckedItems);
-    onChange(updatedCheckedItems);
   };
 
   const renderCheckbox = (option: string, index: number) => (
@@ -38,8 +36,8 @@ const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({ question, options, 
 
   return (
     <View>
-      <Text>{question}</Text>
-      {options.map((option, index) => renderCheckbox(option, index))}
+      <Text>{Question}</Text>
+      {QuestionOptions.map((option, index) => renderCheckbox(option, index))}
     </View>
   );
 };
