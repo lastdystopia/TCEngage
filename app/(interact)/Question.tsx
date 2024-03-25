@@ -13,6 +13,7 @@ interface QuestionProps {
 }
 
 const Question: React.FC<QuestionProps> = ({ Type, question, options, onChange }) => {
+
   switch (Type) {
     case 0:
       return <TextboxQuestion Question={question} onChange = {onChange}  />;

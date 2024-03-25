@@ -8,40 +8,36 @@ interface InteractProps {
 
 const Interact: React.FC<InteractProps> = ({ questions }) => {
   const [showThanks, setShowThanks] = useState(false);
-  const [responses, setResponses] = useState<{ Title: string; Question: string; Response: string }[]>([]);
 
   const handleSubmit = () => {
-    // Collect responses from each question
-    const collectedResponses = questions.map((question) => ({
-      Title: question.Title,
-      Question: question.Title,
-      Response: question.onChange.toString(), 
-    }));
+    console.log("Question responses:");
 
-    // Send responses to the backend
-    console.log("tryna send to backend");
-    fetch('http://192.168.11.115:3001/performanceInfo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(collectedResponses),
-    })
-      .then((response) => {
-        if (response.ok) {
-          setShowThanks(true);
-        
-          setResponses([]);
-        } else {
-          throw new Error('Failed to submit responses');
+    questions.forEach((question) => {
+      const getQResponse = (response: any) => {
+        switch (question.Type) {
+          case 0:
+            return response;
+          case 1:
+            return Array.isArray(response) ? response.join(', ') : response;
+          case 2:
+            return response ? 'true' : 'false';
+          case 3:
+            return response.toString();
+          case 4:
+            return response;
+          default:
+            throw new Error('Invalid question type');
         }
-      })
-      .catch((error) => {
-        console.error('Error submitting responses:', error);
-        // Handle error as needed
-      });
+      };
+
+      console.log(`Question: ${question.Title}`);
+      console.log(`Response: ${getQResponse(question.onChange)}`);
+    });
+
+    setShowThanks(true);
   };
 
+  // If no questions, show a message
   if (!questions || questions.length === 0) {
     return (
       <View style={styles.container}>
@@ -50,6 +46,7 @@ const Interact: React.FC<InteractProps> = ({ questions }) => {
     );
   }
 
+  // If showing thanks, show thanks message
   if (showThanks) {
     return (
       <View style={styles.container}>
@@ -58,6 +55,7 @@ const Interact: React.FC<InteractProps> = ({ questions }) => {
     );
   }
 
+  // Show all questions and a submit button
   return (
     <View style={styles.container}>
       {questions.map((question, index) => (
@@ -71,7 +69,6 @@ const Interact: React.FC<InteractProps> = ({ questions }) => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

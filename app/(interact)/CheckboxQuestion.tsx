@@ -14,6 +14,14 @@ const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({ Question, QuestionO
     const updatedCheckedItems = [...checkedItems];
     updatedCheckedItems[index] = !updatedCheckedItems[index];
     setCheckedItems(updatedCheckedItems);
+    getResponse(); // Log the response in the same way as Question.tsx
+  };
+
+  const getResponse = () => {
+    const selectedOptions = QuestionOptions.filter((_, index) => checkedItems[index]);
+    const response = selectedOptions.join(', ');
+    console.log('Checkbox Question - Question:', Question, 'Response:', response);
+    return response;
   };
 
   const renderCheckbox = (option: string, index: number) => (

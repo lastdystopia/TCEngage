@@ -13,6 +13,7 @@ const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ Question, optio
   const handleOptionPress = (option: string) => {
     setSelectedOption(option);
     onChange(option);
+    getResponse(); // Call the getResponse function to get the response from the question
   };
 
   const renderOptionButton = (option: string) => (
@@ -27,6 +28,11 @@ const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ Question, optio
       <Text>{option}</Text>
     </TouchableOpacity>
   );
+
+  const getResponse = () => {
+    console.log('MultChoice Question - Question:', Question, 'Response:', selectedOption);
+    return selectedOption;
+  };
 
   return (
     <View>
