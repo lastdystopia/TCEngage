@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DropdownFiller from '../(functions)/DropdownFiller';
 import Interact from '../(interact)/Interact';
@@ -13,6 +13,10 @@ const CurrentEventScreen: React.FC = () => {
   };
 
   return (
+    <ImageBackground
+        source={require('../../assets/images/Ferguson_Center_Outside.jpg')} 
+        style={styles.backgroundImage}
+      >
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         <Text>Current Screen Content</Text>
@@ -30,6 +34,7 @@ const CurrentEventScreen: React.FC = () => {
       />
       </View>
     </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -50,6 +55,10 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover', // or 'stretch' or 'contain'
   },
 });
 

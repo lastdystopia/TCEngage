@@ -5,7 +5,7 @@ interface DropdownProps {
   title: string;
   summary: string;
   characters: { [key: string]: string };
-  relationalMap: number; // Placeholder for image or other content
+  relationalMap: string; // Placeholder for image or other content
   startDate: string;
   endDate: string;
 }
@@ -27,17 +27,35 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <TouchableOpacity onPress={toggleDropdown} style={styles.dropdownContainer}>
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.dateRange}>{`${startDate} - ${endDate}`}</Text>
+      <View style={styles.dateContainer}>
+        <Text style={styles.dateLabel}>Start Date:</Text>
+        <Text style={styles.date}>{startDate.substring(0, 10)}</Text>
+        
+      </View>
+      <View style={styles.dateContainer}>
+      
+        <Text style={styles.dateLabel}>End Date:</Text>
+        <Text style={styles.date}>{endDate.substring(0, 10)}</Text>
+      </View>
       {isOpen && (
         <View style={styles.dropdownContent}>
-          <Text style={styles.summary}>{summary}</Text>
-          {Object.entries(characters).map(([name, description]) => (
-            <Text key={name} style={styles.character}>
-              <Text style={styles.characterName}>{name}: </Text>
-              {description}
-            </Text>
-          ))}
-          <Text style={styles.relationalMap}>Relational Map: {relationalMap}</Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionLabel}>Summary:</Text>
+            <Text style={styles.summary}>{summary}</Text>
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionLabel}>Characters:</Text>
+            {Object.entries(characters).map(([name, description]) => (
+              <Text key={name} style={styles.character}>
+                <Text style={styles.characterName}>{name}: </Text>
+                {description}
+              </Text>
+            ))}
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionLabel}>Relational Map:</Text>
+            <Text style={styles.relationalMap}>{relationalMap}</Text>
+          </View>
         </View>
       )}
     </TouchableOpacity>
@@ -50,7 +68,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'grey',
     borderRadius: 5,
-    padding: 10,
+    padding: 5,
     marginVertical: 5,
   },
   title: {
@@ -58,19 +76,32 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
   },
-  dateRange: {
-    fontSize: 16,
+  dateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 5,
-    color: '#666', // color for date range
+  },
+  dateLabel: {
+    fontWeight: 'bold',
+    color: '#666', // color for date label
+  },
+  date: {
+    color: '#666', // color for date
   },
   dropdownContent: {
-    backgroundColor: '#fff',
-    padding: 10,
+    backgroundColor: 'lightgrey', // lighter background for content
+    padding: 5,
     marginTop: 5,
+  },
+  sectionContainer: {
+    marginBottom: 10,
+  },
+  sectionLabel: {
+    fontWeight: 'bold',
   },
   summary: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   character: {
     marginBottom: 5,
@@ -79,10 +110,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   relationalMap: {
-    marginTop: 10,
     fontWeight: 'bold',
   },
 });
 
 export default Dropdown;
+
 

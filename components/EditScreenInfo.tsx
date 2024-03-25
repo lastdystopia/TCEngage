@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import {  StyleSheet, Linking } from 'react-native';
 
 import Colors from '../constants/Colors';
 import { ExternalLink } from './ExternalLink';
@@ -7,6 +7,13 @@ import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
 
 export default function EditScreenInfo({ path }: { path: string }) {
+  const emailAddress = 'lastdistopia@gmail.com';
+
+  const handleEmailLinkPress = () => {
+    const mailtoUrl = `mailto:${emailAddress}`;
+    Linking.openURL(mailtoUrl);
+  };
+
   return (
     <View>
       <View style={styles.getStartedContainer}>
@@ -16,17 +23,10 @@ export default function EditScreenInfo({ path }: { path: string }) {
           darkColor="rgba(255,255,255,0.8)">
           This application is still in development.
         </Text>
-
       </View>
 
       <View style={styles.helpContainer}>
-        <ExternalLink
-          style={styles.helpLink}
-          href="lastdistopia@gmail.com">
-          <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Please report any bugs that interfere with your experience here.
-          </Text>
-        </ExternalLink>
+          <Text style={styles.helpLink} lightColor={Colors.light.tint} onPress={handleEmailLinkPress}> Please report any bugs that interfere with your experience here.</Text>
       </View>
     </View>
   );
