@@ -2,28 +2,20 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 
 interface TextboxQuestionProps {
+  Title: string;
   Question: string;
-  onChange: (text: string) => void;
-}
 
-const TextboxQuestion: React.FC<TextboxQuestionProps> = ({ Question, onChange }) => {
+}
+const getResponse = () => {
+  return "meow";
+};
+const TextboxQuestion: React.FC<TextboxQuestionProps> = ({ Title, Question }) => {
   const [textValue, setTextValue] = useState<string>('');
-  /*
-  Function: handleTextChange
-    - Handles the text change in the TextInput
-  */
+
   const handleTextChange = (text: string) => {
     setTextValue(text);
-    onChange(text); // Pass the text to the parent component onChange function
-    getResponse(); // Call the getResponse function to get the response from the question
-  };
-/*
-Function: getResponse
--returns the response inside the textbox.
-*/
-  const getResponse = () => {
-    console.log('Textbox Question - Question:', Question, 'Response:', textValue, "!!!");
-    return textValue;
+    console.log('Textbox Question - Title:', Title, 'Question:', Question, 'Response:', text);
+    // Perform any other necessary actions with the text input
   };
 
   return (
@@ -33,12 +25,13 @@ Function: getResponse
         style={styles.input}
         value={textValue}
         onChangeText={handleTextChange}
-        maxLength={3000}
+        maxLength={500}
         multiline
       />
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   input: {
     height: 40,

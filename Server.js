@@ -54,6 +54,65 @@ app.get('/question', (req, res) => {
     res.json(results);
   });
 });
+// Function to pull data from RatingQuestion table
+app.get('/RatingQuestion', (req, res) => {
+  connection.query('SELECT * FROM RatingQuestion', (error, results) => {
+    if (error) {
+      console.error('Error fetching rating questions:', error);
+      res.status(500).send('Error fetching rating questions');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+// Function to pull data from CheckboxQuestion table
+app.get('/CheckboxQuestion', (req, res) => {
+  connection.query('SELECT * FROM CheckboxQuestion', (error, results) => {
+    if (error) {
+      console.error('Error fetching checkbox questions:', error);
+      res.status(500).send('Error fetching checkbox questions');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+// Function to pull data from TrueFalseQuestion table
+app.get('/TrueFalseQuestion', (req, res) => {
+  connection.query('SELECT * FROM TrueFalseQuestion', (error, results) => {
+    if (error) {
+      console.error('Error fetching true/false questions:', error);
+      res.status(500).send('Error fetching true/false questions');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+// Function to pull data from TextboxQuestion table
+app.get('/TextboxQuestion', (req, res) => {
+  connection.query('SELECT * FROM TextboxQuestion', (error, results) => {
+    if (error) {
+      console.error('Error fetching textbox questions:', error);
+      res.status(500).send('Error fetching textbox questions');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+// Function to pull data from MultChoiceQuestion table
+app.get('/MultChoiceQuestion', (req, res) => {
+  connection.query('SELECT * FROM MultChoiceQuestion', (error, results) => {
+    if (error) {
+      console.error('Error fetching multichoice questions:', error);
+      res.status(500).send('Error fetching multichoice questions');
+      return;
+    }
+    res.json(results);
+  });
+});
 
 // Function to push data to EngagementInfo table
 app.post('/engagementInfo', (req, res) => {

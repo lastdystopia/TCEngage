@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DropdownFiller from '../(functions)/DropdownFiller';
-import Interact from '../(interact)/Interact';
+import DisplayQuestions from '../(interact)/DisplayQuestions';
 
 const CurrentEventScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -21,17 +21,8 @@ const CurrentEventScreen: React.FC = () => {
       <View style={styles.container}>
         <Text>Current Screen Content</Text>
         <DropdownFiller type={0} />
+<DisplayQuestions/>
 
-
-        <Interact
-        questions={[
-          { Type: 0, Title: 'Type your answer', onChange: (text: string) => console.log(text) },
-          { Type: 2, Title: 'Is it true or false?', onChange: (value: boolean) => console.log(value) },
-          { Type: 3, Title: 'Rate this question', onChange: (rating: number) => console.log(rating) },
-          { Type: 1, Title: 'Select options', options: ['Option 1', 'Option 2', 'Option 3'], onChange: (checkedItems: boolean[]) => console.log(checkedItems) },
-          { Type: 4, Title: 'Choose one', options: ['Option A', 'Option B', 'Option C'], onChange: (selectedOption: string) => console.log(selectedOption) },
-        ]}
-      />
       </View>
     </ScrollView>
     </ImageBackground>

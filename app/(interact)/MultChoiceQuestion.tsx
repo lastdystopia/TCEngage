@@ -2,18 +2,36 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface MultChoiceQuestionProps {
+  Title: string;
   Question: string;
-  options: string[];
-  onChange: (selectedOption: string | null) => void;
+  Option1: string;
+  Option2: string;
+  Option3: string;
+  Option4: string;
+  Option5: string;
+  Option6: string;
+  Option7: string;
+  Option8: string;
 }
 
-const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ Question, options, onChange }) => {
+const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({
+  Title,
+  Question,
+  Option1,
+  Option2,
+  Option3,
+  Option4,
+  Option5,
+  Option6,
+  Option7,
+  Option8,
+}) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleOptionPress = (option: string) => {
     setSelectedOption(option);
-    onChange(option);
-    getResponse(); // Call the getResponse function to get the response from the question
+    console.log('MultChoice Question - Question:', Question, 'Response:', option);
+    // Perform any other necessary actions with the selected option
   };
 
   const renderOptionButton = (option: string) => (
@@ -28,22 +46,32 @@ const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ Question, optio
       <Text>{option}</Text>
     </TouchableOpacity>
   );
-
   const getResponse = () => {
-    console.log('MultChoice Question - Question:', Question, 'Response:', selectedOption);
-    return selectedOption;
+    return "meow";
   };
-
   return (
     <View>
       <Text>{Question}</Text>
       <View style={styles.optionsContainer}>
-        {options.map((option) => renderOptionButton(option))}
+        {[
+          Option1,
+          Option2,
+          Option3,
+          Option4,
+          Option5,
+          Option6,
+          Option7,
+          Option8,
+        ].map((option) => renderOptionButton(option))}
       </View>
     </View>
   );
 };
 
+  // Method to get the selected option
+  const getSelectedOption = () => {
+    return getSelectedOption;
+  };
 const styles = StyleSheet.create({
   optionsContainer: {
     flexDirection: 'row',
