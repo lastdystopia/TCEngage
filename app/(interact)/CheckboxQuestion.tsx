@@ -17,14 +17,17 @@ const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({
   onPressChange
 }) => {
   const [checkedItems, setCheckedItems] = useState<boolean[]>(new Array(Options.length).fill(false));
-
   const handleCheckboxPress = (index: number) => {
-    const updatedCheckedItems = [...checkedItems];
-    updatedCheckedItems[index] = !updatedCheckedItems[index];
-    setCheckedItems(updatedCheckedItems);
-    getResponse(); // Log the response in the same way as Question.tsx
-    onPressChange(getResponse()); // Call onPressChange with response
+    setCheckedItems(prevCheckedItems => {
+      const updatedCheckedItems = [...prevCheckedItems];
+      updatedCheckedItems[index] = !updatedCheckedItems[index];
+      const selectedOptions = Options.filter((_, index) => updatedCheckedItems[index]);
+      console.log(selectedOptions); // Log the selected options for debugging purposes
+      onPressChange(selectedOptions.join(', ')); // Call onPressChange with response
+      return updatedCheckedItems;
+    });
   };
+  
 
   const getResponse = () => {
     const selectedOptions = Options.filter((_, index) => checkedItems[index]);
