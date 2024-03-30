@@ -1,35 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Question from './Question';
 
 interface MultChoiceQuestionProps {
   Title: string;
   Question: string;
-  Option1: string;
-  Option2: string;
-  Option3: string;
-  Option4: string;
-  Option5: string;
-  Option6: string;
-  Option7: string;
-  Option8: string;
+  Options: string[];
+  onResponse: (response: string) => void;
 }
 
-const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({
-  Title,
-  Question,
-  Option1,
-  Option2,
-  Option3,
-  Option4,
-  Option5,
-  Option6,
-  Option7,
-  Option8,
-}) => {
+const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ Title, Question, Options, onResponse }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleOptionPress = (option: string) => {
     setSelectedOption(option);
+    onResponse(option);
     console.log('MultChoice Question - Question:', Question, 'Response:', option);
     // Perform any other necessary actions with the selected option
   };
@@ -46,32 +31,21 @@ const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({
       <Text>{option}</Text>
     </TouchableOpacity>
   );
+
   const getResponse = () => {
-    return "meow";
+    return selectedOption || "";
   };
+
   return (
     <View>
       <Text>{Question}</Text>
       <View style={styles.optionsContainer}>
-        {[
-          Option1,
-          Option2,
-          Option3,
-          Option4,
-          Option5,
-          Option6,
-          Option7,
-          Option8,
-        ].map((option) => renderOptionButton(option))}
+        {Options.map((option) => renderOptionButton(option))}
       </View>
     </View>
   );
 };
 
-  // Method to get the selected option
-  const getSelectedOption = () => {
-    return getSelectedOption;
-  };
 const styles = StyleSheet.create({
   optionsContainer: {
     flexDirection: 'row',

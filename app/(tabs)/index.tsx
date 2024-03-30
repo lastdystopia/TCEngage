@@ -9,6 +9,9 @@ import RatingQuestion from '../(interact)/RatingQuestion';
 import TextboxQuestion from '../(interact)/TextboxQuestion';
 import TrueFalseQuestion from '../(interact)/TrueFalseQuestion';
 import DisplayQuestions from '../(interact)/DisplayQuestions';
+import CheckboxQuestion from '../(interact)/CheckboxQuestion';
+import Form from '../(interact)/Form';
+
 export default function IndexScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -18,10 +21,13 @@ export default function IndexScreen() {
       >
         <View style={styles.overlay}>
           <Text style={styles.title}>Welcome to Theater CNU Engage!</Text>
+          <Text style={styles.title}>Performance Information</Text>
+          <Form/>
+          {/* <CheckboxQuestion/> */}
           <FetchButton />
-          <DisplayQuestions />
-
-          <MultChoiceQuestion
+          {/* <DisplayQuestions /> */}
+          {/*<Interact/>*/}
+          {/* {/* <MultChoiceQuestion
         Title="Romeo and Juliet"
         Question="What is your favorite character in Romeo and Juliet?"
         Option1="Romeo"
@@ -32,23 +38,23 @@ export default function IndexScreen() {
         Option6="Friar Laurence"
         Option7="Benvolio"
         Option8="Paris"
-      />
-      <RatingQuestion
+      /> */}
+      {/*<RatingQuestion
         Title="Example Performance"
         Question="Rate your overall satisfaction with the performance"
-      />
+      />*/}
       
       {/* Example of using TextboxQuestion */}
-      <TextboxQuestion
+      {/*<TextboxQuestion
         Title="Example Performance"
         Question="Please provide any additional comments or feedback"
-      />
+      />*/}
       
       {/* Example of using TrueFalseQuestion */}
-      <TrueFalseQuestion
+      {/*<TrueFalseQuestion
         Title="Example Performance"
         Question="Was the performance enjoyable?"
-      />
+      /> */}
           <Dropdown
             title="Romeo and Juliet"
             startDate="02/14/1597"

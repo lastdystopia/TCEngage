@@ -5,19 +5,22 @@ import { Icon } from '@rneui/themed';
 interface RatingQuestionProps {
   Title: string;
   Question: string;
-
+  onRatingPress: (rating: number) => void; // Add onRatingPress prop
 }
-const getResponse = () => {
-  return "meow";
-};
-const RatingQuestion: React.FC<RatingQuestionProps> = ({ Title, Question }) => {
+
+
+const RatingQuestion: React.FC<RatingQuestionProps> = ({ Title, Question, onRatingPress }) => {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
 
   const handleRatingPress = (rating: number) => {
     setSelectedRating(rating);
+    onRatingPress(rating); // Call onRatingPress callback with the rating value
     console.log('Rating Question - Title:', Title, 'Question:', Question, 'Response:', rating);
-  };
 
+  };
+  const getResponse = () => {
+    return "meow";
+  };
   const renderRatingIcon = (rating: number) => (
     <TouchableOpacity
       key={rating}

@@ -1,47 +1,37 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { CheckBox } from '@rneui/themed';
-
+import Question from './Question';
 
 interface CheckboxQuestionProps {
   Title: string;
   Question: string;
-  Option1: string;
-  Option2: string;
-  Option3: string;
-  Option4: string;
-  Option5: string;
-  Option6: string;
-  Option7: string;
-  Option8: string;
-
+  Options: string[]; // Change to an array of strings
+  onPressChange: (response: string) => void; // Added onPressChange prop
 }
-
 
 const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({
   Title,
   Question,
-  Option1,
-  Option2,
-  Option3,
-  Option4,
-  Option5,
-  Option6,
-  Option7,
-  Option8,
+  Options,
+  onPressChange
 }) => {
-  const [checkedItems, setCheckedItems] = useState<boolean[]>(new Array(8).fill(false));
-  
+  const [checkedItems, setCheckedItems] = useState<boolean[]>(new Array(Options.length).fill(false));
+
   const handleCheckboxPress = (index: number) => {
     const updatedCheckedItems = [...checkedItems];
     updatedCheckedItems[index] = !updatedCheckedItems[index];
     setCheckedItems(updatedCheckedItems);
     getResponse(); // Log the response in the same way as Question.tsx
+    onPressChange(getResponse()); // Call onPressChange with response
   };
-  
+
   const getResponse = () => {
-    return checkedItems.toString();
+    const selectedOptions = Options.filter((_, index) => checkedItems[index]);
+    console.log(selectedOptions); // Log the selected options for debugging purposes
+    return selectedOptions.join(', ');
   };
+
   const renderCheckbox = (option: string, index: number) => (
     <TouchableOpacity
       key={index}
@@ -63,8 +53,7 @@ const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({
   return (
     <View>
       <Text>{Question}</Text>
-      {[Option1, Option2, Option3, Option4, Option5, Option6, Option7, Option8]
-        .map((option, index) => renderCheckbox(option, index))}
+      {Options.map((option, index) => renderCheckbox(option, index))}
     </View>
   );
 };
@@ -77,4 +66,3 @@ const styles = StyleSheet.create({
 });
 
 export default CheckboxQuestion;
-
