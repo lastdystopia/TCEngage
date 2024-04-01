@@ -223,49 +223,50 @@ export default DisplayQuestions;
 // interface RatingQuestion{Title: string; Question: string;}
 // const DisplayQuestions = () => {
 //   // State variables to store fetched data
-//   const [performanceInfo, setPerformanceInfo] = useState<PerformanceInfo[]>([]);
-//   const [checkboxQuestions, setCheckboxQuestions] = useState<CheckboxQuestion[]>([]);
+  // const [performanceInfo, setPerformanceInfo] = useState<PerformanceInfo[]>([]);
+  // const [checkboxQuestions, setCheckboxQuestions] = useState<CheckboxQuestion[]>([]);
 //   const [multChoiceQuestions, setMultChoiceQuestions] = useState<MultChoiceQuestion[]>([]);
 // const [trueFalseQuestions, setTrueFalseQuestions] = useState<TrueFalseQuestion[]>([]);
 // const [textboxQuestions, setTextboxQuestions] = useState<TextboxQuestion[]>([]);
 // const [ratingQuestions, setRatingQuestions] = useState<RatingQuestion[]>([]);
 // const [questions, setQuestions] = useState<Question[]>([]); 
-//   // Function to fetch performance info data
-//   const fetchPerformanceInfo = async () => {
-//     try {
-//       // Fetch performance info data
-//       const response = await fetch('http://192.168.11.115:3001/performanceInfo');
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       const data: PerformanceInfo[] = await response.json();
-//       //console.log(data);
-//       // Filter performance info based on current date
-//       const filteredData = filterPerformanceInfo(data);
-//       console.log(filteredData);
-//       // Set filtered performance info to state
-//       setPerformanceInfo(filteredData);
-//     } catch (error) {
-//       console.error('Error fetching performance info:', error);
-//     }
-//   };
+//   
+// Function to fetch performance info data
+  // const fetchPerformanceInfo = async () => {
+  //   try {
+  //     // Fetch performance info data
+  //     const response = await fetch('http://192.168.11.115:3001/performanceInfo');
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+  //     const data: PerformanceInfo[] = await response.json();
+  //     //console.log(data);
+  //     // Filter performance info based on current date
+  //     const filteredData = filterPerformanceInfo(data);
+  //     console.log(filteredData);
+  //     // Set filtered performance info to state
+  //     setPerformanceInfo(filteredData);
+  //   } catch (error) {
+  //     console.error('Error fetching performance info:', error);
+  //   }
+  // };
 
 //   // Function to fetch checkbox questions data based on performance info title
-//   const fetchCheckboxQuestions = async (title: string) => {
-//     try {
-//       // Fetch checkbox questions data
-//       const response = await fetch(`http://192.168.11.115:3001/CheckboxQuestion?Title=${title}`);
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       const data: CheckboxQuestion[] = await response.json();
-//       console.log(data);
-//       // Set checkbox questions to state
-//       setCheckboxQuestions(data);
-//     } catch (error) {
-//       console.error('Error fetching checkbox questions:', error);
-//     }
-//   };
+  // const fetchCheckboxQuestions = async (title: string) => {
+  //   try {
+  //     // Fetch checkbox questions data
+  //     const response = await fetch(`http://192.168.11.115:3001/CheckboxQuestion?Title=${title}`);
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+  //     const data: CheckboxQuestion[] = await response.json();
+  //     console.log(data);
+  //     // Set checkbox questions to state
+  //     setCheckboxQuestions(data);
+  //   } catch (error) {
+  //     console.error('Error fetching checkbox questions:', error);
+  //   }
+  // };
 // // Function to fetch multiple choice questions data based on performance info title
 // const fetchMultChoiceQuestions = async (title: string) => {
 //     try {
@@ -331,16 +332,17 @@ export default DisplayQuestions;
 //   };
 
 
-//   // Function to filter performance info based on current date
-//   const filterPerformanceInfo = (data: PerformanceInfo[]): PerformanceInfo[] => {
-//     const currentDate = new Date();
-//     const filteredData = data.filter(info => {
-//       const startDate = new Date(info.StartDate);
-//       const endDate = new Date(info.EndDate);
-//       return startDate <= currentDate && currentDate <= endDate;
-//     });
-//     return filteredData;
-//   };
+// 
+  // Function to filter performance info based on current date
+  // const filterPerformanceInfo = (data: PerformanceInfo[]): PerformanceInfo[] => {
+  //   const currentDate = new Date();
+  //   const filteredData = data.filter(info => {
+  //     const startDate = new Date(info.StartDate);
+  //     const endDate = new Date(info.EndDate);
+  //     return startDate <= currentDate && currentDate <= endDate;
+  //   });
+  //   return filteredData;
+  // };
 
 //   // Effect to fetch performance info data when component mounts
 //   useEffect(() => {
@@ -348,19 +350,19 @@ export default DisplayQuestions;
 //   }, []);
 
 //   // Effect to fetch questions data when performance info data changes
-//   useEffect(() => {
-//     // Check if there is performance info data available
-//     if (performanceInfo.length > 0) {
-//       // Fetch checkbox questions for each performance info
-//       performanceInfo.forEach(info => {
-//         fetchCheckboxQuestions(info.Title);
-//         fetchMultChoiceQuestions(info.Title);
-//         fetchTextboxQuestions(info.Title);
-//         fetchRatingQuestions(info.Title);
-//         fetchTrueFalseQuestions(info.Title);
-//       });
-//     }
-//   }, [performanceInfo]);
+  // useEffect(() => {
+  //   // Check if there is performance info data available
+  //   if (performanceInfo.length > 0) {
+  //     // Fetch checkbox questions for each performance info
+  //     performanceInfo.forEach(info => {
+  //       fetchCheckboxQuestions(info.Title);
+  //       fetchMultChoiceQuestions(info.Title);
+  //       fetchTextboxQuestions(info.Title);
+  //       fetchRatingQuestions(info.Title);
+  //       fetchTrueFalseQuestions(info.Title);
+  //     });
+  //   }
+  // }, [performanceInfo]);
 
 //   // Handle press event for the DisplayQuestions button
 //   const handlePress = () => {

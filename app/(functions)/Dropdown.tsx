@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-
+import RelationalMap from './RelationalMap';
 interface DropdownProps {
   title: string;
   summary: string;
@@ -54,7 +54,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           </View>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionLabel}>Relational Map:</Text>
-            <Text style={styles.relationalMap}>{relationalMap}</Text>
+                <RelationalMap imageUrl='relationalMap'/>
           </View>
         </View>
       )}

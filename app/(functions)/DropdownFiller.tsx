@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState} from 'react';
+import { View, Image } from 'react-native';
 import Dropdown from './Dropdown';
-
+import RelationalMap from './RelationalMap';
 interface PerformanceInfo {
   Title: string;
   Summary: string;
@@ -84,10 +84,12 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
             title={info.Title}
             summary={info.Summary}
             characters={associatedCharacters}
+            
             relationalMap={info.RelationalMap}
             startDate={info.StartDate.substring(0, 10)}
             endDate={info.EndDate.substring(0, 10)}
           />
+
         );
       })}
     </View>

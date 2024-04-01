@@ -1,11 +1,12 @@
 const express = require('express');
 const mysql = require('mysql2');
-//const bodyParser = require('body-parser');
-//const cors = require('cors');
+const bodyParser = require('body-parser'); // Import body-parser
 
 const app = express();
-const port = 3000;
+const port = 3002;
 
+// Middleware
+app.use(bodyParser.json()); // Add JSON parsing middleware
 // Middleware
 //app.use(bodyParser.json());
 //app.use(cors());
@@ -43,17 +44,6 @@ app.get('/showCharacter', (req, res) => {
   });
 });
 
-// Function to pull data from Question table
-app.get('/question', (req, res) => {
-  connection.query('SELECT * FROM Question', (error, results, fields) => {
-    if (error) {
-      console.error('Error fetching questions:', error);
-      res.status(500).send('Error fetching questions');
-      return;
-    }
-    res.json(results);
-  });
-});
 // Function to pull data from RatingQuestion table
 app.get('/RatingQuestion', (req, res) => {
   connection.query('SELECT * FROM RatingQuestion', (error, results) => {
@@ -67,7 +57,7 @@ app.get('/RatingQuestion', (req, res) => {
 });
 
 // Function to pull data from CheckboxQuestion table
-app.get('/CheckboxQuestion', (req, res) => {
+app.get('/CheckBoxQuestion', (req, res) => {
   connection.query('SELECT * FROM CheckboxQuestion', (error, results) => {
     if (error) {
       console.error('Error fetching checkbox questions:', error);
