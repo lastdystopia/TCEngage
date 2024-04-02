@@ -8,7 +8,7 @@ interface ImageComponentProps {
 const RelationalMap: React.FC<ImageComponentProps> = ({ imageUrl }) => {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: imageUrl }} style={styles.image} />
+      <Image source={{ uri: imageUrl.toString() }} style={styles.image} />
     </View>
   );
 };

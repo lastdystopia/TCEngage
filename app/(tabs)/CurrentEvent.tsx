@@ -2,15 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DropdownFiller from '../(functions)/DropdownFiller';
-import DisplayQuestions from '../(interact)/DisplayQuestions';
 
 const CurrentEventScreen: React.FC = () => {
   const navigation = useNavigation();
 
-  const goToForm = () => {
-    console.log("Going to interactive screen");
-    // navigation.navigate('InteractiveScreen');
-  };
+  
 
   return (
     <ImageBackground
@@ -21,7 +17,6 @@ const CurrentEventScreen: React.FC = () => {
       <View style={styles.container}>
         <Text>Current Screen Content</Text>
         <DropdownFiller type={0} />
-<DisplayQuestions/>
 
       </View>
     </ScrollView>

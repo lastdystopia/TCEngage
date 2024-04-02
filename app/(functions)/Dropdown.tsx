@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import RelationalMap from './RelationalMap';
 interface DropdownProps {
   title: string;
@@ -25,6 +25,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
+    <ScrollView>
     <TouchableOpacity onPress={toggleDropdown} style={styles.dropdownContainer}>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.dateContainer}>
@@ -59,6 +60,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         </View>
       )}
     </TouchableOpacity>
+    </ScrollView>
   );
 };
 

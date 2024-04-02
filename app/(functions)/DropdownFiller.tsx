@@ -76,6 +76,8 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
           .filter(character => character.Title === info.Title)
           .reduce<{ [key: string]: string }>((acc, character) => {
             acc[character.Name] = character.Description;
+            {console.log(info.RelationalMap)}
+
             return acc;
           }, {});
         return (
@@ -89,10 +91,10 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
             startDate={info.StartDate.substring(0, 10)}
             endDate={info.EndDate.substring(0, 10)}
           />
-
         );
       })}
     </View>
+
   );
 };
 

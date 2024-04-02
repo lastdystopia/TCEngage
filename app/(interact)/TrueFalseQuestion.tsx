@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { CheckBox } from '@rneui/themed';
-import Question from './Question';
 
 interface TrueFalseQuestionProps {
   Title: string;
