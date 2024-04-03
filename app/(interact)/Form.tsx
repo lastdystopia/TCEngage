@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, ScrollView, Button, StyleSheet, TouchableOpacity  } from 'react-native';
+import { View, Text, ScrollView, Button, StyleSheet, TouchableOpacity, Image  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CheckboxQuestion from './CheckboxQuestion';
 import MultChoiceQuestion from './MultChoiceQuestion';
@@ -15,6 +15,8 @@ interface PerformanceInfo {
   RelationalMap: string;
 }
 const Form: React.FC = () => {
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
   const [performanceInfo, setPerformanceInfo] = useState<PerformanceInfo[]>([]);
   const [performanceTitle, setPerformanceTitle] = useState<string>('');
   const [checkboxQ, setCheckQ] = useState<string>();
@@ -212,13 +214,13 @@ onResponse={handleMultChoiceChange}
     /*
      */
     const handleSubmit = () => {
-      console.log("----------------------");
-      console.log(performanceTitle);
-      console.log(checkboxQ, ": ", checkboxValue);
-      console.log(multQ, ": ", multChoiceValue);
-      console.log(textboxQ, ": ", textboxValue);
-      console.log(ratingQ, ": ", ratingValue);
-      console.log(tfQ, ": ", tfValue);
+      // console.log("----------------------");
+      // console.log(performanceTitle);
+      // console.log(checkboxQ, ": ", checkboxValue);
+      // console.log(multQ, ": ", multChoiceValue);
+      // console.log(textboxQ, ": ", textboxValue);
+      // console.log(ratingQ, ": ", ratingValue);
+      // console.log(tfQ, ": ", tfValue);
   
       // Check if any value is undefined
       if (
@@ -234,6 +236,7 @@ onResponse={handleMultChoiceChange}
       } else {
           // All values are defined, submit engagement info
           submitEngagementInfo();
+          setSubmitted(true);
       }
   };
   
@@ -301,6 +304,12 @@ onResponse={handleMultChoiceChange}
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      {submitted ? (
+        <View style={styles.gifContainer}>
+        <Text style={styles.thankYouText}>Thank you for your submission!</Text>
+        <Image source={require('../../assets/images/thank-you-icegif-7.gif')} style={styles.gif} />
+      </View>
+      ):(
       <View style={styles.container}>
         <Text style={styles.formTitle} >Interaction and Feedback</Text>
 
@@ -334,6 +343,7 @@ onResponse={handleMultChoiceChange}
   <Icon name="check" size={35} color="#3b5098"   />
 </TouchableOpacity>
       </View>
+       )}
     </ScrollView>
   );
 };
@@ -353,10 +363,38 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignItems: 'center',
   },
+  gif: {
+    width: 200,
+    height: 200,
+  },
   questionContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.5)', 
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
+  },
+  formContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 10,
+    margin: 10,
+  },
+  gifContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  gifInnerContainer: {
+    alignItems: 'center',
+  },
+  thankYouText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'white'
+  },
+  submitButton: {
+    alignItems: 'center',
   },
 });
