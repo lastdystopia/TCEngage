@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'rea
 import RelationalMap from './RelationalMap';
 interface DropdownProps {
   title: string;
+  kudos: string;
+
   summary: string;
   characters: { name: string; description: string; actor: string }[];   
   relationalMap: string; // Placeholder for image or other content
@@ -12,6 +14,7 @@ interface DropdownProps {
 
 const Dropdown: React.FC<DropdownProps> = ({
   title,
+  kudos,
   summary,
   characters,
   relationalMap,
@@ -39,11 +42,15 @@ const Dropdown: React.FC<DropdownProps> = ({
         {isOpen && (
           <View style={styles.dropdownContent}>
             <View style={styles.sectionContainer}>
+              <Text style={styles.sectionLabel}>Kudos:</Text>
+              <Text style={styles.summary}>{kudos}</Text>
+            </View>
+            <View style={styles.sectionContainer}>
               <Text style={styles.sectionLabel}>Summary:</Text>
               <Text style={styles.summary}>{summary}</Text>
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionLabel}>Characters:</Text>
+              {/* <Text style={styles.sectionLabel}>Characters:</Text> */}
               {characters.map(({ name, description, actor }) => (
                 <Text key={name} style={styles.character}>
                   <Text style={styles.characterName}>{name}: </Text>

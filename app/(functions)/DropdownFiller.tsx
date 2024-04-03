@@ -4,6 +4,7 @@ import Dropdown from './Dropdown';
 import RelationalMap from './RelationalMap';
 interface PerformanceInfo {
   Title: string;
+  Kudos: string;
   Summary: string;
   StartDate: string;
   EndDate: string;
@@ -85,6 +86,7 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
           <Dropdown
             key={index}
             title={info.Title}
+            kudos={info.Kudos}
             summary={info.Summary}
             characters={associatedCharacters}
             relationalMap={info.RelationalMap}

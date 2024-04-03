@@ -16,42 +16,8 @@ export default function IndexScreen() {
       >
         <View style={styles.overlay}>
           <Text style={styles.title}>Welcome to Theater CNU Engage!</Text>
-          <Text style={styles.title}>Performance Information</Text>
           <Form/>
-          {/* <CheckboxQuestion/> */}
-          <FetchButton />
-          {/* <DisplayQuestions /> */}
-          {/*<Interact/>*/}
-          {/* {/* <MultChoiceQuestion
-        Title="Romeo and Juliet"
-        Question="What is your favorite character in Romeo and Juliet?"
-        Option1="Romeo"
-        Option2="Juliet"
-        Option3="Mercutio"
-        Option4="Tybalt"
-        Option5="Nurse"
-        Option6="Friar Laurence"
-        Option7="Benvolio"
-        Option8="Paris"
-      /> */}
-      {/*<RatingQuestion
-        Title="Example Performance"
-        Question="Rate your overall satisfaction with the performance"
-      />*/}
-      
-      {/* Example of using TextboxQuestion */}
-      {/*<TextboxQuestion
-        Title="Example Performance"
-        Question="Please provide any additional comments or feedback"
-      />*/}
-      
-      {/* Example of using TrueFalseQuestion */}
-      {/*<TrueFalseQuestion
-        Title="Example Performance"
-        Question="Was the performance enjoyable?"
-      /> */}
-          
-
+        
           <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
           <EditScreenInfo path="app/(tabs)/index.tsx" />
         </View>
