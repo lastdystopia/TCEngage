@@ -224,12 +224,12 @@ onResponse={handleMultChoiceChange}
   
       // Check if any value is undefined
       if (
-          performanceTitle === undefined ||
-          checkboxQ === undefined ||
-          multQ === undefined ||
-          textboxQ === undefined ||
-          ratingQ === undefined ||
-          tfQ === undefined
+        performanceTitle === undefined ||
+        checkboxQ === undefined || checkboxValue === '' ||
+        multQ === undefined || multChoiceValue === '' ||
+        textboxQ === undefined || textboxValue === '' ||
+        ratingQ === undefined || isNaN(ratingValue) ||
+        tfQ === undefined
       ) {
           // Display popup
           alert("Please fill out all data.");
