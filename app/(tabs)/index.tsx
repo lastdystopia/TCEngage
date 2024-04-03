@@ -16,7 +16,7 @@ export default function IndexScreen() {
       >
         <View style={styles.overlay}>
           <Text style={styles.title}>Welcome to Theater CNU Engage!</Text>
-          <Form/>
+          {/* <Form/> */}
         
           <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
           <EditScreenInfo path="app/(tabs)/index.tsx" />
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)', // Adjust the opacity as needed
-    padding: 20, // Adjust as needed
+    backgroundColor: 'rgba(0,0,0)', 
+    padding: 20, 
     justifyContent: 'center',
     alignItems: 'center',
   },

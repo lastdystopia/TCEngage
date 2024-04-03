@@ -72,6 +72,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 };
 
 const styles = StyleSheet.create({
+  
   dropdownContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.5)', // Semi-transparent white background
     borderWidth: 1,
@@ -79,6 +80,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     marginVertical: 5,
+    width: '100%', 
+    flexDirection: 'column',
+    minWidth: '100%',
   },
   title: {
     fontSize: 24,

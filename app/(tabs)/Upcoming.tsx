@@ -9,7 +9,10 @@ const Upcoming: React.FC = () => {
         style={styles.backgroundImage}
       >
         <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
+
       <DropdownFiller type={2} />
+      </View>
       </ScrollView>
       </ImageBackground>
   );
@@ -34,6 +37,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover', // or 'stretch' or 'contain'
   },
+  
 });
 
 export default Upcoming;

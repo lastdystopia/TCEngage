@@ -21,33 +21,36 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarLabelStyle: { fontSize: 13 }
       }}>
+        <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Welcome!',
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+        }}
+      />
       <Tabs.Screen
         name="Upcoming"
         options={{
-          title: 'Upcoming Events',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={15}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          title: 'Upcoming',
+          tabBarIcon: ({ color }) => <TabBarIcon name="exclamation" color={color} />
+          
         }}
       />
       <Tabs.Screen
         name="CurrentEvent"
         options={{
-          title: 'Current Events',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Current',
+          tabBarIcon: ({ color }) => <TabBarIcon name="film" color={color} />,
+        }}
+      />
+      
+      <Tabs.Screen
+        name="Archive"
+        options={{
+          title: 'Archive',
+          tabBarIcon: ({ color }) => <TabBarIcon name="history" color={color} />,
         }}
       />
       

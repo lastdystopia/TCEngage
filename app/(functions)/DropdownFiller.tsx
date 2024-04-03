@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Text } from 'react-native';
 import Dropdown from './Dropdown';
 import RelationalMap from './RelationalMap';
 interface PerformanceInfo {
@@ -71,37 +71,47 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
   });
   // Sort by dates
   filteredInfo.sort((a, b) => new Date(b.StartDate).getTime() - new Date(a.StartDate).getTime());
+
+
+  
   return (
-    <View>
-      {filteredInfo.map((info, index) => {
-        const associatedCharacters = showCharacters
-          .filter(character => character.Title === info.Title)
-          .map(character => ({
-            name: character.Name,
-            description: character.Description,
-            actor: character.Actor,
-          }));
+    <View style={styles.container}>
+      {filteredInfo.length === 0 ? (
+        <View style={styles.messageContainer}>
+        <Text style={styles.messageText}>No performances to display, stay tuned!</Text>
+        <Image source={{ uri: 'https://media.giphy.com/media/STkhzhWCHMHX093jzM/giphy.gif' }} style={styles.gif} />
+        </View>
+      ) : (
+        filteredInfo.map((info, index) => {
+          const associatedCharacters = showCharacters
+            .filter(character => character.Title === info.Title)
+            .map(character => ({
+              name: character.Name,
+              description: character.Description,
+              actor: character.Actor,
+            }));
 
-        return (
-          <Dropdown
-            key={index}
-            title={info.Title}
-            kudos={info.Kudos}
-            summary={info.Summary}
-            characters={associatedCharacters}
-            relationalMap={info.RelationalMap}
-            startDate={info.StartDate.substring(0, 10)}
-            endDate={info.EndDate.substring(0, 10)}
-          />
-        );
-      })}
+          return (
+            <Dropdown
+              key={index}
+              title={info.Title}
+              kudos={info.Kudos}
+              summary={info.Summary}
+              characters={associatedCharacters}
+              relationalMap={info.RelationalMap}
+              startDate={info.StartDate.substring(0, 10)}
+              endDate={info.EndDate.substring(0, 10)}
+            />
+          );
+        })
+      )}
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    width: '80%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -109,6 +119,23 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
+  },
+  messageContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 10,
+    padding: 20,
+    margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  messageText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  gif: {
+    width: 200, 
+    height: 200,
+    marginTop: 10, 
   },
 });
 export default DropdownFiller;

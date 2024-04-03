@@ -16,6 +16,7 @@ interface PerformanceInfo {
 }
 const Form: React.FC = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [showEngageBox, setShowEngageBox] = useState<boolean>(true); 
 
   const [performanceInfo, setPerformanceInfo] = useState<PerformanceInfo[]>([]);
   const [performanceTitle, setPerformanceTitle] = useState<string>('');
@@ -304,52 +305,64 @@ onResponse={handleMultChoiceChange}
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      {submitted ? (
-        <View style={styles.gifContainer}>
-        <Text style={styles.thankYouText}>Thank you for your submission!</Text>
-        <Image source={require('../../assets/images/thank-you-icegif-7.gif')} style={styles.gif} />
-      </View>
-      ):(
-      <View style={styles.container}>
-        <Text style={styles.formTitle} >Interaction and Feedback</Text>
-
-        {/* Container for checkbox questions */}
-        <View style={styles.questionContainer}>
-          {generateCheckboxes()}
+      {showEngageBox ? (
+        <TouchableOpacity
+          style={styles.engageBox}
+          onPress={() => setShowEngageBox(false)} // Hide the engagement box when pressed
+        >
+          <Text style={styles.engageText}>Press here to engage!</Text>
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.container}>
+          {submitted ? (
+            // Submitted message
+            <View style={styles.gifContainer}>
+              <Text style={styles.thankYouText}>Thank you for your submission!</Text>
+              <Image source={require('../../assets/images/thank-you-icegif-7.gif')} style={styles.gif} />
+            </View>
+          ) : (
+            // Form content
+            <>
+              <Text style={styles.formTitle} >Interaction and Feedback</Text>
+              <View style={styles.questionContainer}>
+                {generateCheckboxes()}
+              </View>
+              <View style={styles.questionContainer}>
+                {generateMultChoice()}
+              </View>
+              <View style={styles.questionContainer}>
+                {generateTextbox()}
+              </View>
+              <View style={styles.questionContainer}>
+                {generateRating()}
+              </View>
+              <View style={styles.questionContainer}>
+                {generateTF()}
+              </View>
+              <TouchableOpacity onPress={handleSubmit} style={{ alignItems: 'center' }}>
+                <Icon name="check" size={35} color="#3b5098"   />
+              </TouchableOpacity>
+            </>
+          )}
         </View>
-
-        {/* Container for multichoice questions */}
-        <View style={styles.questionContainer}>
-          {generateMultChoice()}
-        </View>
-
-        {/* Container for textbox questions */}
-        <View style={styles.questionContainer}>
-          {generateTextbox()}
-        </View>
-
-        {/* Container for rating questions */}
-        <View style={styles.questionContainer}>
-          {generateRating()}
-        </View>
-
-        {/* Container for true/false questions */}
-        <View style={styles.questionContainer}>
-          {generateTF()}
-        </View>
-
-        {/* Submit button */}
-        <TouchableOpacity onPress={handleSubmit} style={{ alignItems: 'center' }}>
-  <Icon name="check" size={35} color="#3b5098"   />
-</TouchableOpacity>
-      </View>
-       )}
+      )}
     </ScrollView>
   );
 };
-
 export default Form;
 const styles = StyleSheet.create({
+  engageBox: {
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 10,
+    padding: 20,
+    margin: 10,
+    alignItems: 'center',
+  },
+  engageText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3b5098',
+  },
   container: {
     flex: 1,
     padding: 20,
