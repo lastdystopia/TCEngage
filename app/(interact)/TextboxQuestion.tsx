@@ -4,15 +4,16 @@ import { View, Text, TextInput, StyleSheet } from 'react-native';
 interface TextboxQuestionProps {
   Title: string;
   Question: string;
-  onTextChange: (text: string) => void; // Add onTextChange prop
+  onTextChange: (text: string) => void;  
 }
 
 const TextboxQuestion: React.FC<TextboxQuestionProps> = ({ Title, Question, onTextChange }) => {
   const [textValue, setTextValue] = useState<string>('');
 
   const handleTextChange = (text: string) => {
-    setTextValue(text);
-    onTextChange(text); // Call the onTextChange callback with the updated text value
+    const truncatedText = text.slice(0, 3000); // truncate text so if somebody pastes text it wont exceed limit!
+    setTextValue(truncatedText);
+    onTextChange(truncatedText); // Call the onTextChange callback with the updated text value
   };
 
   return (

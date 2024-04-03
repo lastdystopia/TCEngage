@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { CheckBox } from '@rneui/themed';
-import Question from './Question';
 
 interface CheckboxQuestionProps {
   Title: string;
   Question: string;
-  Options: string[]; // Change to an array of strings
+  Options: (string | null)[]; // Change to an array of strings or null
   onPressChange: (response: string) => void; // Added onPressChange prop
 }
 
@@ -27,31 +26,29 @@ const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({
       return updatedCheckedItems;
     });
   };
-  
 
-  const getResponse = () => {
-    const selectedOptions = Options.filter((_, index) => checkedItems[index]);
-    console.log(selectedOptions); // Log the selected options for debugging purposes
-    return selectedOptions.join(', ');
-  };
-
-  const renderCheckbox = (option: string, index: number) => (
-    <TouchableOpacity
-      key={index}
-      onPress={() => handleCheckboxPress(index)}
-      style={styles.checkboxContainer}
-    >
-      <CheckBox
-        checked={checkedItems[index]}
+  const renderCheckbox = (option: string | null, index: number) => {
+    if (option === null) {
+      return null; // Return null if option is null
+    }
+    return (
+      <TouchableOpacity
+        key={index}
         onPress={() => handleCheckboxPress(index)}
-        iconType="material-community"
-        checkedIcon="checkbox-marked"
-        uncheckedIcon="checkbox-blank-outline"
-        checkedColor="blue"
-      />
-      <Text>{option}</Text>
-    </TouchableOpacity>
-  );
+        style={styles.checkboxContainer}
+      >
+        <CheckBox
+          checked={checkedItems[index]}
+          onPress={() => handleCheckboxPress(index)}
+          iconType="material-community"
+          checkedIcon="checkbox-marked"
+          uncheckedIcon="checkbox-blank-outline"
+          checkedColor="blue"
+        />
+        <Text>{option}</Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View>
