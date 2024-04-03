@@ -1,25 +1,17 @@
-import React, { useState } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import React from 'react';
+import { View, Image, StyleSheet } from 'react-native';
 
 interface ImageComponentProps {
-  imageUrl: string;
+  imageUrl: string; 
 }
 
 const RelationalMap: React.FC<ImageComponentProps> = ({ imageUrl }) => {
-  const [expanded, setExpanded] = useState(false);
-
-  const toggleImageSize = () => {
-    setExpanded(!expanded);
-  };
-
   return (
-    <TouchableOpacity onPress={toggleImageSize} activeOpacity={1} style={styles.container}>
-      <Image source={{ uri: imageUrl }} style={[styles.image, expanded && styles.expandedImage]} />
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <Image source={{ uri: imageUrl }} style={styles.image} />
+    </View>
   );
 };
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -32,12 +24,7 @@ const styles = StyleSheet.create({
   },
   image: {
     aspectRatio: 1, // Maintain aspect ratio
-    width: '100%',
-  },
-  expandedImage: {
-    width: screenWidth, // Expand to full width
-    height: screenHeight, // Expand to full height
-    resizeMode: 'contain', // Adjust image content to fit container
+    width: '100%', 
   },
 });
 
