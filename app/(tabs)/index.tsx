@@ -4,12 +4,7 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import Dropdown from '../(functions)/Dropdown';
 import FetchButton from '../../FetchPerformanceInfoButton';
-import MultChoiceQuestion from '../(interact)/MultChoiceQuestion';
-import RatingQuestion from '../(interact)/RatingQuestion';
-import TextboxQuestion from '../(interact)/TextboxQuestion';
-import TrueFalseQuestion from '../(interact)/TrueFalseQuestion';
-import DisplayQuestions from '../(interact)/DisplayQuestions';
-import CheckboxQuestion from '../(interact)/CheckboxQuestion';
+
 import Form from '../(interact)/Form';
 
 export default function IndexScreen() {
@@ -55,18 +50,7 @@ export default function IndexScreen() {
         Title="Example Performance"
         Question="Was the performance enjoyable?"
       /> */}
-          <Dropdown
-            title="Romeo and Juliet"
-            startDate="02/14/1597"
-            endDate="04/23/1616"
-            summary="This is a summary of my dropdown."
-            characters={{
-              character1: 'Description for character 1',
-              character2: 'Description for character 2',
-              character3: 'Description for character 3',
-            }}
-            relationalMap="123" // Placeholder value
-          />
+          
 
           <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
           <EditScreenInfo path="app/(tabs)/index.tsx" />

@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, ScrollView, Button } from 'react-native';
+import { View, Text, ScrollView, Button, StyleSheet, TouchableOpacity  } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import CheckboxQuestion from './CheckboxQuestion';
 import MultChoiceQuestion from './MultChoiceQuestion';
 import RatingQuestion from './RatingQuestion';
 import TextboxQuestion from './TextboxQuestion';
 import TrueFalseQuestion from './TrueFalseQuestion';
+
 interface PerformanceInfo {
   Title: string;
   Summary: string;
@@ -299,18 +301,62 @@ onResponse={handleMultChoiceChange}
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View style={{ flex: 1, padding: 20 }}>
-        <Text>Form Title</Text>
-        {generateCheckboxes()}
-        {generateMultChoice()}
-        {generateTextbox()}
-        {generateRating()}
-        {generateTF()}
-        
-        <Button title="Submit" onPress={handleSubmit} />
+      <View style={styles.container}>
+        <Text style={styles.formTitle} >Interaction and Feedback</Text>
+
+        {/* Container for checkbox questions */}
+        <View style={styles.questionContainer}>
+          {generateCheckboxes()}
+        </View>
+
+        {/* Container for multichoice questions */}
+        <View style={styles.questionContainer}>
+          {generateMultChoice()}
+        </View>
+
+        {/* Container for textbox questions */}
+        <View style={styles.questionContainer}>
+          {generateTextbox()}
+        </View>
+
+        {/* Container for rating questions */}
+        <View style={styles.questionContainer}>
+          {generateRating()}
+        </View>
+
+        {/* Container for true/false questions */}
+        <View style={styles.questionContainer}>
+          {generateTF()}
+        </View>
+
+        {/* Submit button */}
+        <TouchableOpacity onPress={handleSubmit} style={{ alignItems: 'center' }}>
+  <Icon name="check" size={35} color="#3b5098"   />
+</TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
 
 export default Form;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)', 
+    borderRadius: 10,
+    margin: 10,
+  },
+  formTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  questionContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+  },
+});

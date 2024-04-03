@@ -8,20 +8,23 @@ interface ImageComponentProps {
 const RelationalMap: React.FC<ImageComponentProps> = ({ imageUrl }) => {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: imageUrl.toString() }} style={styles.image} />
+      <Image source={{ uri: imageUrl }} style={styles.image} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: '#ccc', // Gray border color
+    borderWidth: 1, // Border width
+    borderRadius: 10, // Rounded corners
+    overflow: 'hidden', // Clip image to container bounds
   },
   image: {
-    width: 200,
-    height: 200,
+    aspectRatio: 1, // Maintain aspect ratio
+    width: '100%', 
   },
 });
 

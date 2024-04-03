@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import Dropdown from './Dropdown';
 import RelationalMap from './RelationalMap';
 interface PerformanceInfo {
@@ -68,25 +68,25 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
         return true;
     }
   });
-
+  // Sort by dates
+  filteredInfo.sort((a, b) => new Date(b.StartDate).getTime() - new Date(a.StartDate).getTime());
   return (
     <View>
       {filteredInfo.map((info, index) => {
         const associatedCharacters = showCharacters
           .filter(character => character.Title === info.Title)
-          .reduce<{ [key: string]: string }>((acc, character) => {
-            acc[character.Name] = character.Description;
-            {console.log(info.RelationalMap)}
+          .map(character => ({
+            name: character.Name,
+            description: character.Description,
+            actor: character.Actor,
+          }));
 
-            return acc;
-          }, {});
         return (
           <Dropdown
             key={index}
             title={info.Title}
             summary={info.Summary}
             characters={associatedCharacters}
-            
             relationalMap={info.RelationalMap}
             startDate={info.StartDate.substring(0, 10)}
             endDate={info.EndDate.substring(0, 10)}
@@ -98,4 +98,15 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 200,
+    height: 200,
+  },
+});
 export default DropdownFiller;

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DropdownFiller from '../(functions)/DropdownFiller';
+import Form from '../(interact)/Form';
 
 const CurrentEventScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -15,8 +16,11 @@ const CurrentEventScreen: React.FC = () => {
       >
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <Text>Current Screen Content</Text>
         <DropdownFiller type={0} />
+
+      </View>
+      <View style={styles.container}>
+      <Form/>
 
       </View>
     </ScrollView>
