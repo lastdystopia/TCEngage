@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import { View, Image, StyleSheet, Text } from 'react-native';
 import Dropdown from './Dropdown';
-import RelationalMap from './RelationalMap';
+// Declare an interface for both to put the data into.
 interface PerformanceInfo {
   Title: string;
   Kudos: string;
@@ -52,18 +52,18 @@ const DropdownFiller2: React.FC<{ type: number }> = ({ type }) => {
     fetchPerformanceInfo();
     fetchShowCharacters();
   }, []);
-
+// This function filters the info to display relavant performance information.
   const filteredInfo = performanceInfo.filter(info => {
     const currentDate = new Date();
     const startDate = new Date(info.StartDate);
     const endDate = new Date(info.EndDate);
 
     switch (type) {
-      case 0:
+      case 0: // Display the current show
         return startDate <= currentDate && endDate >= currentDate;
-      case 1:
+      case 1: // display past shows
         return endDate < currentDate;
-      case 2:
+      case 2: // display upcoming shows
         return startDate > currentDate;
       default:
         return true;
@@ -71,17 +71,16 @@ const DropdownFiller2: React.FC<{ type: number }> = ({ type }) => {
   });
   // Sort by dates
   filteredInfo.sort((a, b) => new Date(b.StartDate).getTime() - new Date(a.StartDate).getTime());
-
-
   
   return (
+    // If there are no performances to display, display stay tuned gif.
     <View style={styles.container}>
       {filteredInfo.length === 0 ? (
         <View style={styles.messageContainer}>
         <Text style={styles.messageText}>No performances to display, stay tuned!</Text>
         <Image source={{ uri: 'https://media.giphy.com/media/STkhzhWCHMHX093jzM/giphy.gif' }} style={styles.gif} />
         </View>
-      ) : (
+      ) : ( //map out info of associated characters, character to matching title field. 
         filteredInfo.map((info, index) => {
           const associatedCharacters = showCharacters
             .filter(character => character.Title === info.Title)
@@ -90,7 +89,7 @@ const DropdownFiller2: React.FC<{ type: number }> = ({ type }) => {
               description: character.Description,
               actor: character.Actor,
             }));
-
+            // return a dropdown with the dropdown data and the associated character data.
           return (
             <Dropdown
               key={index}
@@ -109,6 +108,7 @@ const DropdownFiller2: React.FC<{ type: number }> = ({ type }) => {
   );
 };
 
+// Stylesheet
 const styles = StyleSheet.create({
   container: {
     width: '80%',

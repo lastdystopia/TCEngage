@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Question from './Question';
 
 interface MultChoiceQuestionProps {
   Title: string;
@@ -35,12 +34,12 @@ const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ Title, Question
   const getResponse = () => {
     return selectedOption || "";
   };
-
+  const filteredOptions = Options.filter(option => option !== null);
   return (
     <View>
       <Text>{Question}</Text>
       <View style={styles.optionsContainer}>
-        {Options.map((option) => renderOptionButton(option))}
+        {filteredOptions.map((option) => renderOptionButton(option))}
       </View>
     </View>
   );

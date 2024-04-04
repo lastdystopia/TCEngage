@@ -20,13 +20,12 @@ const Form: React.FC = () => {
 
   const [performanceInfo, setPerformanceInfo] = useState<PerformanceInfo[]>([]);
   const [performanceTitle, setPerformanceTitle] = useState<string>('');
-  //These are the values that will be submitted to engagementinfo
+  //These are the values that will be submitted to engagementinfo - depracated
   const [checkboxQ, setCheckQ] = useState<string>();
   const [textboxQ, setTextQ] = useState<string>();
   const [multQ, setmultQ] = useState<string>();
   const [tfQ, settfQ] = useState<string>('false');
-  const [ratingQ, setRatingQ] = useState<string>();
-
+  const [ratingQ, setRatingQ] = useState<string>();  
 // These are the questions that will be displayed
   const [checkboxQuestions, setCheckboxQuestions] = useState<any[]>([]);
   const [multchoiceQuestions, setMultChoiceQuestions] = useState<any[]>([]);
@@ -34,12 +33,19 @@ const Form: React.FC = () => {
   const [ratingQuestions, setRatingQuestions]=useState<any[]>([]);
   const [tfQuestions, setTFQuestions]=useState<any[]>([]);
 // These are the values stored in each question
-    const [textboxValue, setTextboxValue] = useState<string>('');
-    const [ratingValue, setSelectedRating] = useState<number>(1);
-    const [tfValue, setTFValue] = useState<boolean>(false);
-    const [checkboxValue, setCheckboxValue] = useState<string>('');
-    const [multChoiceValue, setMultChoiceValue] = useState<string>('');
     
+const [textboxValue, setTextboxValue] = useState<string>('');
+const [ratingValue, setSelectedRating] = useState<number>(1);
+const [tfValue, setTFValue] = useState<boolean>(false);
+const [checkboxValue, setCheckboxValue] = useState<string>('');
+const [multChoiceValue, setMultChoiceValue] = useState<string>('');
+     // responses
+     const [checkboxResponses, setCheckboxResponses] = useState<{ [key: string]: string }>({});
+     const [textboxResponses, setTextboxResponses] = useState<{ [key: string]: string }>({});
+     const [multChoiceResponses, setMultChoiceResponses] = useState<{ [key: string]: string }>({});
+     const [ratingResponses, setRatingResponses] = useState<{ [key: string]: string }>({});
+     const [tfResponses, setTFResponses] = useState<{ [key: string]: string }>({});
+
   useEffect(() => {
     fetchPerformanceInfo();
   }, []);
@@ -47,10 +53,10 @@ const Form: React.FC = () => {
   useEffect(() => {
     if (performanceInfo.length > 0) {
       fetchCheckboxQuestions();
-      fetchMultChoiceQuestions();
-      fetchTextboxQuestions();
-      fetchRatingQuestions();
-      fetchTFQuestions();
+    fetchMultChoiceQuestions();
+    fetchRatingQuestions();
+    fetchTextboxQuestions();
+    fetchTFQuestions();
     }
   }, [performanceInfo]);
   const fetchPerformanceInfo = async () => {
@@ -99,6 +105,8 @@ const Form: React.FC = () => {
       console.error('Error fetching checkbox questions:', error);
     }
   };
+  
+  
   const fetchMultChoiceQuestions = async() =>{
     try{
       const multchoiceQuestions = await Promise.all(performanceInfo.map(async info => {
@@ -166,40 +174,49 @@ const Form: React.FC = () => {
 
     catch(error){console.error("error fetching true false questions: ", error);}
   };
-  
-  const generateCheckboxes = () => {
-    return checkboxQuestions.flat().map((question, index) => (
-      <CheckboxQuestion
-        key={index}
-        Title={question.Title}
-        Question={question.Question}
-        Options={[question.Option1, question.Option2, question.Option3, question.Option4, question.Option5, question.Option6, question.Option7, question.Option8]}
-        onPressChange={handleCheckboxChange}
-      />
-    ));
-  };
-  const generateMultChoice = () =>{
+
+const generateCheckboxes = () => {
+  return checkboxQuestions.flat().map((question, index) => (
+    <CheckboxQuestion
+      key={index}
+      Title={question.Title}
+      Question={question.Question}
+      Options={[question.Option1, question.Option2, question.Option3, question.Option4, question.Option5, question.Option6, question.Option7, question.Option8]}
+      onPressChange={(response) => handleCheckboxChange(question.Question, response)} // Pass the question and response to handleCheckboxChange
+    />
+  ));
+};
+
+const generateMultChoice = () =>{
     return multchoiceQuestions.flat().map((question, index)=>(
 <MultChoiceQuestion
 key={index}
 Title={question.Title}
 Question={question.Question}
 Options={[question.Option1, question.Option2, question.Option3, question.Option4, question.Option5, question.Option6, question.Option7, question.Option8]}
-onResponse={handleMultChoiceChange}
+//onResponse={handleMultChoiceChange}
+onResponse={(response) => handleMultChoiceChange(question.Question, response)}  
+
 />
     ));
   };
-   const generateTextbox = () =>{
+  
+  
+  const generateTextbox = () =>{
     return textboxQuestions.flat().map((question, index)=>(
       <TextboxQuestion
-      key = {index} Title={question.Title} Question={question.Question} onTextChange={handleTextboxChange}
+      key = {index} Title={question.Title} Question={question.Question} 
+      //onTextChange={handleTextboxChange}
+      onTextChange={(response) => handleTextboxChange(question.Question, response)}
       />
     ));
    } ;
    const generateRating = () =>{
     return ratingQuestions.flat().map((question, index)=>(
       <RatingQuestion
-      key={index} Title={question.Title} Question={question.Question} onRatingPress={handleRatingChange}
+      key={index} Title={question.Title} Question={question.Question} 
+      //onRatingPress={handleRatingChange}
+      onRatingPress={(response) => handleRatingChange(question.Question, response)}
       />
     ));
    
@@ -208,53 +225,94 @@ onResponse={handleMultChoiceChange}
    const generateTF = () =>{
     return tfQuestions.flat().map((question, index)=>(
       <TrueFalseQuestion
-      key={index} Title={question.Title} Question={question.Question} onCheckboxChange={handleTFChange}
+      key={index} Title={question.Title} Question={question.Question} 
+      //onCheckboxChange={handleTFChange}
+onCheckboxChange={(response) => handleTFChange(question.Question, response)}
       />
     ));
    
-   };
-    /*
-     */
-    const handleSubmit = () => {
-      // console.log("----------------------");
-      // console.log(performanceTitle);
-      // console.log(checkboxQ, ": ", checkboxValue);
-      // console.log(multQ, ": ", multChoiceValue);
-      // console.log(textboxQ, ": ", textboxValue);
-      // console.log(ratingQ, ": ", ratingValue);
-      // console.log(tfQ, ": ", tfValue);
-  
-      // Check if any value is undefined
-      if (
-        performanceTitle === undefined ||
-        checkboxQ === undefined || checkboxValue === '' ||
+   }; 
+const handleSubmit = () => {
+  // Iterate through checkbox questions and their responses
+  Object.entries(checkboxResponses).forEach(([question, response]) => {
+    // Log question and its associated response
+    console.log("-------1---------");
+    console.log(`${question}: ${response}`);
+  });
+  Object.entries(textboxResponses).forEach(([question, response]) => {
+    // Log question and its associated response
+    console.log("-------1---------");
+    console.log(`${question}: ${response}`);
+  });
+  Object.entries(ratingResponses).forEach(([question, response]) => {
+    // Log question and its associated response
+    console.log("-------1---------");
+    console.log(`${question}: ${response}`);
+  });
+  Object.entries(multChoiceResponses).forEach(([question, response]) => {
+    // Log question and its associated response
+    console.log("-------1---------");
+    console.log(`${question}: ${response}`);
+  });
+  Object.entries(tfResponses).forEach(([question, response]) => {
+    // Log question and its associated response
+    console.log("-------1---------");
+    console.log(`${question}: ${response}`);
+  });
+  // Check if any value is undefined
+  if (
+    performanceTitle === undefined || 
+    checkboxQ === undefined || checkboxValue === '' ||
         multQ === undefined || multChoiceValue === '' ||
         textboxQ === undefined || textboxValue === '' ||
         ratingQ === undefined || isNaN(ratingValue) ||
-        tfQ === undefined
-      ) {
-          // Display popup
-          alert("Please fill out all fields.");
-      } else {
-          // All values are defined, submit engagement info
-          submitEngagementInfo();
-          setSubmitted(true);
-      }
-  };
+        tfQ === undefined||
+    Object.values(checkboxResponses).some(response => response === '')||
+    Object.values(textboxResponses).some(response => response === '')||
+    Object.values(tfResponses).some(response => response === '')||
+    Object.values(multChoiceResponses).some(response => response === '')||
+    Object.values(ratingResponses).some(response => response === '')
+  ) {
+    // Display popup
+    alert("Please fill out all fields.");
+  } else {
+    // All values are defined, submit engagement info
+    submitEngagementInfo();
+    setSubmitted(true);
+  }
+};
   
-  const submitEngagementInfo = async () => {
+const submitEngagementInfo = async () => {
     try {
       const requests: Promise<Response>[] = []; // Define requests as an array of Promises  
+      
       // Array of objects containing question types and their corresponding values
-      const questionResponses = [
-        { questionType: checkboxQ, response: checkboxValue },
-        { questionType: multQ, response: multChoiceValue },
-        { questionType: textboxQ, response: textboxValue },
-        { questionType: ratingQ, response: ratingValue },
-        { questionType: tfQ, response: tfValue }
-      ];
-  console.log(questionResponses);
-      // Iterate over each question type and response
+      const checkboxQuestionResponses = Object.entries(checkboxResponses).map(([question, response]) => ({
+        questionType: question,
+        response: response,
+      }));
+      const textboxQuestionResponses = Object.entries(textboxResponses).map(([question, response]) => ({
+        questionType: question,
+        response: response,
+      }));
+      const multChoiceQuestionResponses = Object.entries(multChoiceResponses).map(([question, response]) => ({
+        questionType: question,
+        response: response,
+      }));
+      const tfQuestionResponses = Object.entries(tfResponses).map(([question, response]) => ({
+        questionType: question,
+        response: response,
+      }));
+      const ratingQuestionResponses = Object.entries(ratingResponses).map(([question, response]) => ({
+        questionType: question,
+        response: response,
+      }));
+      const questionResponses = checkboxQuestionResponses
+      .concat(textboxQuestionResponses)
+      .concat(multChoiceQuestionResponses)
+      .concat(tfQuestionResponses)
+      .concat(ratingQuestionResponses);
+            // Iterate over each question type and response
       questionResponses.forEach(({ questionType, response }) => {
         requests.push(
           fetch('http://192.168.11.115:3001/engagementInfo', {
@@ -280,30 +338,45 @@ onResponse={handleMultChoiceChange}
     }
   };
   
-  
-  const handleTextboxChange = (text: string) => {
-    setTextboxValue(text);
-    console.log('Textbox value:', text);
+  const handleCheckboxChange = (question: string, response: string) => {
+    // Update the response for the corresponding question
+    setCheckboxResponses(prevState => ({
+      ...prevState,
+      [question]: response
+    }));
   };
-  const handleRatingChange = (rating: number) => {
-    setSelectedRating(rating);
-    console.log('Selected Rating:', rating);
-  };
-  const handleTFChange = (TF: boolean) => {
-    setTFValue(TF);
-    console.log('TF value:', TF);
-  }
   
-  const handleCheckboxChange = (response: string) => {
-    setCheckboxValue(response);
-    console.log('Checkbox response:', response);
+  const handleMultChoiceChange = (question: string, response: string) => {
+    // Update the response for the corresponding question
+    setMultChoiceResponses(prevState => ({
+      ...prevState,
+      [question]: response
+    }));
   };
-  const handleMultChoiceChange = (response: string) => {
-    setMultChoiceValue(response);
-    console.log('MultChoice response:', response);
-  
-  }
 
+  const handleTextboxChange = (question: string, text: string) => {
+    // Update the response for the corresponding question
+    setTextboxResponses(prevState => ({
+      ...prevState,
+      [question]: text
+    }));
+  };
+  
+  const handleRatingChange = (question: string, rating: number) => {
+    // Update the response for the corresponding question
+    setRatingResponses(prevState => ({
+      ...prevState,
+      [question]: rating.toString()
+    }));
+  };
+  
+  const handleTFChange = (question: string, TF: boolean) => {
+    // Update the response for the corresponding question
+    setTFResponses(prevState => ({
+      ...prevState,
+      [question]: TF.toString()
+    }));
+  };
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       {showEngageBox ? (
@@ -327,19 +400,12 @@ onResponse={handleMultChoiceChange}
               <Text style={styles.formTitle} >Interaction and Feedback</Text>
               <View style={styles.questionContainer}>
                 {generateCheckboxes()}
-              </View>
-              <View style={styles.questionContainer}>
                 {generateMultChoice()}
-              </View>
-              <View style={styles.questionContainer}>
                 {generateTextbox()}
-              </View>
-              <View style={styles.questionContainer}>
                 {generateRating()}
-              </View>
-              <View style={styles.questionContainer}>
                 {generateTF()}
               </View>
+            
               <TouchableOpacity onPress={handleSubmit} style={{ alignItems: 'center' }}>
                 <Icon name="check" size={35} color="#3b5098"   />
               </TouchableOpacity>
