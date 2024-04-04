@@ -233,7 +233,7 @@ onCheckboxChange={(response) => handleTFChange(question.Question, response)}
    
    }; 
 const handleSubmit = () => {
-  // Iterate through checkbox questions and their responses
+  // Iterate through questions and their responses
   Object.entries(checkboxResponses).forEach(([question, response]) => {
     // Log question and its associated response
     console.log("-------1---------");
@@ -262,20 +262,26 @@ const handleSubmit = () => {
   // Check if any value is undefined
   if (
     performanceTitle === undefined || 
-    checkboxQ === undefined || checkboxValue === '' ||
-        multQ === undefined || multChoiceValue === '' ||
-        textboxQ === undefined || textboxValue === '' ||
-        ratingQ === undefined || isNaN(ratingValue) ||
-        tfQ === undefined||
-    Object.values(checkboxResponses).some(response => response === '')||
-    Object.values(textboxResponses).some(response => response === '')||
-    Object.values(tfResponses).some(response => response === '')||
-    Object.values(multChoiceResponses).some(response => response === '')||
-    Object.values(ratingResponses).some(response => response === '')
-  ) {
+    Object.values(checkboxResponses).some(response => response === undefined || response === '') ||
+    
+    Object.values(textboxResponses).some(response => response === undefined || response === '') ||
+    Object.values(tfResponses).some(response => response === undefined || response === '') ||
+    Object.values(multChoiceResponses).some(response => response === undefined || response === '') ||
+    Object.values(ratingResponses).some(response => response === undefined || response === '')||
+    Object.keys(checkboxResponses).length < checkboxQuestions.length ||
+    Object.keys(textboxResponses).length < textboxQuestions.length ||
+    Object.keys(tfResponses).length < tfQuestions.length ||
+    Object.keys(multChoiceResponses).length < multchoiceQuestions.length ||
+    Object.keys(ratingResponses).length < ratingQuestions.length
+  ){
     // Display popup
     alert("Please fill out all fields.");
   } else {
+    console.log(checkboxResponses);
+    console.log(textboxResponses);
+    console.log(multChoiceResponses);
+    console.log(tfResponses);
+    console.log(ratingResponses);
     // All values are defined, submit engagement info
     submitEngagementInfo();
     setSubmitted(true);
@@ -312,6 +318,7 @@ const submitEngagementInfo = async () => {
       .concat(multChoiceQuestionResponses)
       .concat(tfQuestionResponses)
       .concat(ratingQuestionResponses);
+      console.log("kdskfkdf", textboxQuestionResponses);
             // Iterate over each question type and response
       questionResponses.forEach(({ questionType, response }) => {
         requests.push(
