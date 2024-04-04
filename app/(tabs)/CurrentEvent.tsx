@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import DropdownFiller from '../(functions)/DropdownFiller';
-import Form from '../(interact)/Form3';
+import Form from '../(interact)/Form';
 const CurrentEventScreen: React.FC = () => {
   
 
