@@ -1,20 +1,29 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, ScrollView, Image, StyleSheet } from 'react-native';
 
-interface ImageComponentProps {
-  imageUrl: string; 
+interface ContainerProps {
+  imageUrl: string;
 }
 
-const RelationalMap: React.FC<ImageComponentProps> = ({ imageUrl }) => {
+const RelationalMap: React.FC<ContainerProps> = ({ imageUrl }) => {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: imageUrl }} style={styles.image} />
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContainer}
+        maximumZoomScale={3} // Adjust as needed for maximum zoom level
+        minimumZoomScale={1} // Adjust as needed for minimum zoom level
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="contain" />
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#ccc', // Gray border color
@@ -22,9 +31,13 @@ const styles = StyleSheet.create({
     borderRadius: 10, // Rounded corners
     overflow: 'hidden', // Clip image to container bounds
   },
+  scrollViewContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   image: {
     aspectRatio: 1, // Maintain aspect ratio
-    width: '100%', 
+    width: '100%',
   },
 });
 

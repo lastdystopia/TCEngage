@@ -13,10 +13,10 @@ app.use(cors()); // Enable CORS for all routes
 //app.use(cors());
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  //password: 'CapstonePr0j',
-  database: 'TempTCE'  
+  host: 'database-1.c72asiuys3dv.us-east-2.rds.amazonaws.com',
+  user: 'admin',
+  password: 'B00mShakaLaka',
+  database: 'TCE'  
 });
 
 // Connect to MySQL database
@@ -25,7 +25,16 @@ connection.connect((err) => {
     console.error('Error connecting to database:', err);
     return;
   }
-  console.log('Connected to MySQL database');
+  connection.query('SHOW TABLES', (error, results) => {
+    if (error) {
+      console.error('Error fetching tables:', error);
+      return;
+    }
+    console.log('Tables in the database:');
+    results.forEach((table) => {
+      console.log(table[`Tables_in_${connection.config.database}`]);
+    });
+  });
 });
 
 // Function to pull data from PerformanceInfo table
@@ -38,8 +47,8 @@ app.get('/performanceInfo', (req, res) => {
 });
 
 // Function to pull data from ShowCharacter table
-app.get('/showCharacter', (req, res) => {
-  connection.query('SELECT * FROM ShowCharacter', (error, results) => {
+app.get('/showcharacter', (req, res) => {
+  connection.query('SELECT * FROM showcharacter', (error, results) => {
     if (error) throw error;
     res.json(results);
   });

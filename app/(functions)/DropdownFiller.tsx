@@ -25,27 +25,27 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
   useEffect(() => {
     const fetchPerformanceInfo = async () => {
       try {
-        const response = await fetch('http://192.168.11.115:3001/performanceInfo');
+        const response = await fetch('https://database-1.c72asiuys3dv.us-east-2.rds.amazonaws.com/performanceinfo');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data: PerformanceInfo[] = await response.json();
         setPerformanceInfo(data);
       } catch (error) {
-        console.error('Error fetching performance info:', error);
+        console.error('Error fetching performance info DropdownFill:', error);
       }
     };
 
     const fetchShowCharacters = async () => {
       try {
-        const response1 = await fetch('http://192.168.11.115:3001/ShowCharacter');
+        const response1 = await fetch('https://database-1.c72asiuys3dv.us-east-2.rds.amazonaws.com/showcharacter');
         if (!response1.ok) {
           throw new Error('Network response was not ok');
         }
         const data: ShowCharacter[] = await response1.json();
         setShowCharacters(data);
       } catch (error) {
-        console.error('Error fetching show characters:', error);
+        console.error('Error fetching show characters DropdownFill:', error);
       }
     };
 

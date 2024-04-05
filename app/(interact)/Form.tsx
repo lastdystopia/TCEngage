@@ -61,7 +61,7 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
   }, [performanceInfo]);
   const fetchPerformanceInfo = async () => {
     try {
-      const response = await fetch('http://192.168.11.115:3001/performanceInfo');
+      const response = await fetch('https://database-1.c72asiuys3dv.us-east-2.rds.amazonaws.com:3306/performanceinfo');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
