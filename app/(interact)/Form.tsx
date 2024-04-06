@@ -6,7 +6,7 @@ import MultChoiceQuestion from './MultChoiceQuestion';
 import RatingQuestion from './RatingQuestion';
 import TextboxQuestion from './TextboxQuestion';
 import TrueFalseQuestion from './TrueFalseQuestion';
-
+import { PROTOCOL, BASE_URL, PORT } from '../../constants/Config';
 interface PerformanceInfo {
   Title: string;
   Summary: string;
@@ -61,7 +61,7 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
   }, [performanceInfo]);
   const fetchPerformanceInfo = async () => {
     try {
-      const response = await fetch('https://database-1.c72asiuys3dv.us-east-2.rds.amazonaws.com:3306/performanceinfo');
+      const response = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/performanceinfo');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -75,7 +75,7 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
 
       setPerformanceInfo(filteredData);
     } catch (error) {
-      console.error('Error fetching performance info:', error);
+      console.error('Error fetching performance info in Form:', error);
     }
   };
 
@@ -92,7 +92,7 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
   const fetchCheckboxQuestions = async () => {
     try {
       const checkboxQuestions = await Promise.all(performanceInfo.map(async info => {
-        const response = await fetch(`http://192.168.11.115:3001/CheckboxQuestion?Title=${info.Title}`);
+        const response = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/CheckboxQuestion?Title=${info.Title}');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -110,7 +110,7 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
   const fetchMultChoiceQuestions = async() =>{
     try{
       const multchoiceQuestions = await Promise.all(performanceInfo.map(async info => {
-        const response = await fetch(`http://192.168.11.115:3001/MultChoiceQuestion?Title${info.Title}`);
+        const response = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/MultChoiceQuestion?Title${info.Title}');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -122,13 +122,13 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
     }
     
     catch(error){
-      console.error("error fetching multiple choice questiosn:", error);
+      console.error("error fetching multiple choice questions form-side:", error);
     }
   };
   const fetchTextboxQuestions = async() =>{
     try{
       const textboxQuestions = await Promise.all(performanceInfo.map(async info => {
-        const response = await fetch(`http://192.168.11.115:3001/TextboxQuestion?Title${info.Title}`);
+        const response = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/TextboxQuestion?Title${info.Title}');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -145,7 +145,7 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
   const fetchRatingQuestions = async()=>{
     try{
       const ratingQuestions = await Promise.all(performanceInfo.map(async info => {
-        const response = await fetch(`http://192.168.11.115:3001/RatingQuestion?Title${info.Title}`);
+        const response = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/RatingQuestion?Title${info.Title}');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -161,7 +161,7 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
   const fetchTFQuestions = async()=>{
     try{
       const tfQuestions = await Promise.all(performanceInfo.map(async info => {
-        const response = await fetch(`http://192.168.11.115:3001/TrueFalseQuestion?Title${info.Title}`);
+        const response = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/TrueFalseQuestion?Title${info.Title}');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

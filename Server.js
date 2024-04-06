@@ -5,6 +5,8 @@ const cors = require('cors'); // Import CORS
 const app = express();
 const port = 3001;
 
+// ask for CNU-domain DNS alias for SOMETHING.CNU.edu pointing to ec2-18-191-50-2.us-east-2.compute.amazonaws.com
+
 // Middleware
 app.use(bodyParser.json()); // Add JSON parsing middleware
 app.use(cors()); // Enable CORS for all routes
@@ -18,117 +20,81 @@ const connection = mysql.createConnection({
   password: 'B00mShakaLaka',
   database: 'TCE'  
 });
-
+// make an error handler that catches error and console.logs so it wont fall just because it doesnt work
 // Connect to MySQL database
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to database:', err);
-    return;
-  }
-  connection.query('SHOW TABLES', (error, results) => {
-    if (error) {
-      console.error('Error fetching tables:', error);
+
+
+  connection.connect((err) => {
+    if (err) {
+      console.error('Error connecting to database:', err);
       return;
     }
-    console.log('Tables in the database:');
-    results.forEach((table) => {
-      console.log(table[`Tables_in_${connection.config.database}`]);
-    });
+  
+    console.log('Connected to MySQL database');
   });
-});
+// Error handler function
+function errorHandler(res, error, errorMessage) {
+  console.error(errorMessage, error);
+  res.status(500).send(errorMessage);
+}
 
+// Function to handle database queries
+function handleQuery(query, res, errorMessage) {
+  connection.query(query, (error, results) => {
+    if (error) {
+      errorHandler(res, error, errorMessage);
+      return;
+    }
+    res.json(results);
+  });
+}
 // Function to pull data from PerformanceInfo table
 app.get('/performanceInfo', (req, res) => {
-  console.log("Trynna getch");
-  connection.query('SELECT * FROM PerformanceInfo', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
+  handleQuery('SELECT * FROM PerformanceInfo', res, 'Error fetching performance info:');
 });
-
-// Function to pull data from ShowCharacter table
-app.get('/showcharacter', (req, res) => {
-  connection.query('SELECT * FROM showcharacter', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
+app.get('/showCharacter', (req, res) => {
+  handleQuery('SELECT * FROM ShowCharacter', res, 'Error fetching show characters:');
 });
 
 // Function to pull data from RatingQuestion table
 app.get('/RatingQuestion', (req, res) => {
-  connection.query('SELECT * FROM RatingQuestion', (error, results) => {
-    if (error) {
-      console.error('Error fetching rating questions:', error);
-      res.status(500).send('Error fetching rating questions');
-      return;
-    }
-    res.json(results);
-  });
+  handleQuery('SELECT * FROM RatingQuestion', res, 'Error fetching rating questions:');
 });
 
 // Function to pull data from CheckboxQuestion table
 app.get('/CheckBoxQuestion', (req, res) => {
-  connection.query('SELECT * FROM CheckboxQuestion', (error, results) => {
-    if (error) {
-      console.error('Error fetching checkbox questions:', error);
-      res.status(500).send('Error fetching checkbox questions');
-      return;
-    }
-    res.json(results);
-  });
+  handleQuery('SELECT * FROM CheckboxQuestion', res, 'Error fetching checkbox questions:');
 });
 
 // Function to pull data from TrueFalseQuestion table
 app.get('/TrueFalseQuestion', (req, res) => {
-  connection.query('SELECT * FROM TrueFalseQuestion', (error, results) => {
-    if (error) {
-      console.error('Error fetching true/false questions:', error);
-      res.status(500).send('Error fetching true/false questions');
-      return;
-    }
-    res.json(results);
-  });
+  handleQuery('SELECT * FROM TrueFalseQuestion', res, 'Error fetching true/false questions:');
 });
 
 // Function to pull data from TextboxQuestion table
 app.get('/TextboxQuestion', (req, res) => {
-  connection.query('SELECT * FROM TextboxQuestion', (error, results) => {
-    if (error) {
-      console.error('Error fetching textbox questions:', error);
-      res.status(500).send('Error fetching textbox questions');
-      return;
-    }
-    res.json(results);
-  });
+  handleQuery('SELECT * FROM TextboxQuestion', res, 'Error fetching textbox questions:');
 });
 
 // Function to pull data from MultChoiceQuestion table
-app.get('/MultChoiceQuestion', (req, res) => {
-  connection.query('SELECT * FROM MultChoiceQuestion', (error, results) => {
-    if (error) {
-      console.error('Error fetching multichoice questions:', error);
-      res.status(500).send('Error fetching multichoice questions');
-      return;
-    }
-    res.json(results);
-  });
+app.get('/multchoicequestion', (req, res) => {
+  handleQuery('SELECT * FROM multchoicequestion', res, 'Error fetching multichoice questions:');
 });
 
 // Function to push data to EngagementInfo table
 app.post('/engagementInfo', (req, res) => {
   const { title, question, response } = req.body;
-  const query = 'INSERT INTO EngagementInfo (Title, Question, Response) VALUES (?, ?, ?)';
+  const query = 'INSERT INTO engagementinfo (Title, Question, Response) VALUES (?, ?, ?)';
   connection.query(query, [title, question, response], (error, results, fields) => {
     if (error) {
-      console.error('Error inserting data:', error);
-      res.status(500).send('Error inserting data');
+      errorHandler(res, error, 'Error inserting data:');
       return;
     }
     res.json({ message: 'Data inserted successfully' });
   });
 });
-
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+module.exports = connection; // Export the connection object

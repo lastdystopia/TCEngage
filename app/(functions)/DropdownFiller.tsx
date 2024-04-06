@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import { View, Image, StyleSheet, Text } from 'react-native';
 import Dropdown from './Dropdown';
-import RelationalMap from './RelationalMap';
+import { PROTOCOL, BASE_URL, PORT } from '../../constants/Config';
 interface PerformanceInfo {
   Title: string;
   Kudos: string;
@@ -25,10 +25,12 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
   useEffect(() => {
     const fetchPerformanceInfo = async () => {
       try {
-        const response = await fetch('https://database-1.c72asiuys3dv.us-east-2.rds.amazonaws.com/performanceinfo');
+        const response = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/performanceinfo');        
         if (!response.ok) {
+          console.log(response);
           throw new Error('Network response was not ok');
         }
+
         const data: PerformanceInfo[] = await response.json();
         setPerformanceInfo(data);
       } catch (error) {
@@ -38,14 +40,14 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
 
     const fetchShowCharacters = async () => {
       try {
-        const response1 = await fetch('https://database-1.c72asiuys3dv.us-east-2.rds.amazonaws.com/showcharacter');
+        const response1 = await fetch('http://ec2-18-191-50-2.us-east-2.compute.amazonaws.com:3001/ShowCharacter');
         if (!response1.ok) {
           throw new Error('Network response was not ok');
         }
         const data: ShowCharacter[] = await response1.json();
         setShowCharacters(data);
       } catch (error) {
-        console.error('Error fetching show characters DropdownFill:', error);
+        console.error('Error fetching show characters:', error);
       }
     };
 

@@ -61,7 +61,6 @@ const Dropdown: React.FC<DropdownProps> = ({
               ))}
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionLabel}>Relationship Chart</Text>
               <RelationalMap imageUrl={relationalMap} />
             </View>
           </View>
