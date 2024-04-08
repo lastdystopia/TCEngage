@@ -3,6 +3,7 @@ import { StyleSheet, ScrollView, ImageBackground, TextInput, TouchableOpacity, V
 import { Text } from '../../components/Themed';
 import bcrypt from 'react-native-bcrypt'; 
 import EditScreenInfo from '../../components/EditScreenInfo';
+import { PROTOCOL, BASE_URL, PORT } from '../../constants/Config';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -21,15 +22,41 @@ export default function LoginPage() {
   const createAccount = () => {
     console.log('Create new User Username:', newUsername);
     console.log('New User Password:', newPassword);
-    // TODO - implement account creation logic
+    // Check if username is too short or too long
+  if (newUsername.length < 5 || newUsername.length > 100) {
+    alert('Username length must be between 5 and 100 characters.');
+    return;
+  }
+  
+  // Check if password is too short or too long
+  if (newPassword.length < 5 || newPassword.length > 100) {
+    alert('Password length must be between 5 and 100 characters.');
+    return;
+  }
+  fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/createUser', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username: newUsername, password: newPassword }),
+  }) .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else if (response.status === 409) {
+      return Promise.reject(new Error('Username already exists'));
+    } else {
+      return Promise.reject(new Error('Error creating user'));
+    }
+  })
+  .then(data => {
+    console.log(data.message); // User created successfully
+    // TODO: Handle successful user creation
+  })
+  .catch(error => {
+    console.error(error.message); // Error message from server
+    // TODO: Handle error
+  });
   };
-// Function to hash password
-// hashing is one way, don't "unhash", hash password a second time when comparing it to database 
-const hashPassword = (password: string) => {
-  const saltRounds = 10; // Number of "salt rounds"
-  const salt = bcrypt.genSaltSync(saltRounds); // Generate a salt
-  return bcrypt.hashSync(password, salt); // Hash the password with the generated salt
-};
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

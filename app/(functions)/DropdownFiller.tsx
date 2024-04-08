@@ -40,7 +40,7 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
 
     const fetchShowCharacters = async () => {
       try {
-        const response1 = await fetch('http://ec2-18-191-50-2.us-east-2.compute.amazonaws.com:3001/ShowCharacter');
+        const response1 = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/ShowCharacter');
         if (!response1.ok) {
           throw new Error('Network response was not ok');
         }
