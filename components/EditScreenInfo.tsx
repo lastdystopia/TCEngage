@@ -7,7 +7,7 @@ import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
 
 export default function EditScreenInfo({ path }: { path: string }) {
-  const emailAddress = 'lastdistopia@gmail.com';
+  const emailAddress = 'theatercnuengage@gmail.com';
 
   const handleEmailLinkPress = () => {
     const mailtoUrl = `mailto:${emailAddress}`;
@@ -22,6 +22,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
           lightColor="rgba(0,0,0,0.8)"
           darkColor="rgba(255,255,255,0.8)">
           This application is still in development.
+          If you locked out of your account, please send an email to the hyperlink below.
         </Text>
       </View>
 

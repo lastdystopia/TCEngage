@@ -2,8 +2,6 @@ import { StyleSheet, ScrollView, ImageBackground , TouchableOpacity} from 'react
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
-import Dropdown from '../(functions)/Dropdown';
-import FetchButton from '../../FetchPerformanceInfoButton';
 
 import Form from '../(interact)/Form';
 
@@ -11,7 +9,7 @@ export default function IndexScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <ImageBackground
-        source={require('../../assets/images/Ferguson_Center_Outside.jpg')} // Path to your image
+        source={require('../../assets/images/Ferguson_Center_Outside.jpg')}  
         style={styles.backgroundImage}
       >
         <View style={styles.overlay}>

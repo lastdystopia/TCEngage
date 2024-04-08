@@ -39,3 +39,7 @@ yarn-error.*
 
 expo-env.d.ts
 # @end expo-cli
+
+#dont want to commit .env or node_modules
+.env
+node_modules

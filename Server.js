@@ -1,19 +1,16 @@
+
 const express = require('express');
-const mysql = require('mysql2');
-const bodyParser = require('body-parser'); // Import body-parser
-const cors = require('cors'); // Import CORS
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+const bcrypt = require('bcryptjs');
+const User = require('./models/User');
+const passportConfig = require('./Passport');
+var crypto = require('crypto'); 
 const app = express();
-const port = 3001;
-
-// ask for CNU-domain DNS alias for SOMETHING.CNU.edu pointing to ec2-18-191-50-2.us-east-2.compute.amazonaws.com
-
-// Middleware
-app.use(bodyParser.json()); // Add JSON parsing middleware
-app.use(cors()); // Enable CORS for all routes
-// Middleware
-//app.use(bodyParser.json());
-//app.use(cors());
-
+const port = 3000;
+// Everything below this line is for loi
+// Everything below this line is for rds connection
 const connection = mysql.createConnection({
   host: 'database-1.c72asiuys3dv.us-east-2.rds.amazonaws.com',
   user: 'admin',
@@ -97,4 +94,3 @@ app.post('/engagementInfo', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-module.exports = connection; // Export the connection object
