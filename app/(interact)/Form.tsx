@@ -28,7 +28,7 @@ const Form: React.FC = () => {
   const [checkboxQ, setCheckQ] = useState<string>();
   const [textboxQ, setTextQ] = useState<string>();
   const [multQ, setmultQ] = useState<string>();
-  const [tfQ, settfQ] = useState<string>('false');
+  const [tfQ, settfQ] = useState<string>();
   const [ratingQ, setRatingQ] = useState<string>();  
 // These are the questions that will be displayed
   const [checkboxQuestions, setCheckboxQuestions] = useState<any[]>([]);
@@ -275,34 +275,37 @@ const handleSubmit = () => {
     console.log("-------1---------");
     console.log(`${question}: ${response}`);
   });
-  // Check if any value is undefined
-  if (
-    performanceTitle === undefined || 
-    Object.values(checkboxResponses).some(response => response === undefined || response === '') ||
-    
-    Object.values(textboxResponses).some(response => response === undefined || response === '') ||
-    Object.values(tfResponses).some(response => response === undefined || response === '') ||
-    Object.values(multChoiceResponses).some(response => response === undefined || response === '') ||
-    Object.values(ratingResponses).some(response => response === undefined || response === '')||
-    Object.keys(checkboxResponses).length < checkboxQuestions.length ||
-    Object.keys(textboxResponses).length < textboxQuestions.length ||
-    Object.keys(tfResponses).length < tfQuestions.length ||
-    Object.keys(multChoiceResponses).length < multchoiceQuestions.length ||
-    Object.keys(ratingResponses).length < ratingQuestions.length
-  ){
-    // Display popup
-    alert("Please fill out all fields.");
-  } else {
-    console.log(checkboxResponses);
-    console.log(textboxResponses);
-    console.log(multChoiceResponses);
-    console.log(tfResponses);
-    console.log(ratingResponses);
-    // All values are defined, submit engagement info
-    submitEngagementInfo();
-    setSubmitted(true);
-  }
-};
+  // Validate checkbox responses
+    const missingCheckboxResponses = checkboxQuestions.flat().filter(question => !checkboxResponses[question.Question]);
+
+    // Validate textbox responses
+    const missingTextboxResponses = textboxQuestions.flat().filter(question => !textboxResponses[question.Question]);
+
+    // Validate multichoice responses
+    const missingMultChoiceResponses = multchoiceQuestions.flat().filter(question => !multChoiceResponses[question.Question]);
+
+    // Validate rating responses
+    const missingRatingResponses = ratingQuestions.flat().filter(question => !ratingResponses[question.Question]);
+
+    // Validate true/false responses
+    const missingTFResponses = tfQuestions.flat().filter(question => !tfResponses[question.Question]);
+
+    // Check if any responses are missing
+    if (
+      missingCheckboxResponses.length > 0 ||
+      missingTextboxResponses.length > 0 ||
+      missingMultChoiceResponses.length > 0 ||
+      missingRatingResponses.length > 0 ||
+      missingTFResponses.length > 0
+    ) {
+      // Display popup
+      alert("Please fill out all fields.");
+    } else {
+      // All values are defined, submit engagement info
+      submitEngagementInfo();
+      setSubmitted(true);
+    }
+  };
   
 const submitEngagementInfo = async () => {
     try {
