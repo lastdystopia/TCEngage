@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import DropdownFiller from '../(functions)/DropdownFiller';
 import Form from '../(interact)/Form';
+import Login from '../(interact)/Login';
 const CurrentEventScreen: React.FC = () => {
   
 
@@ -13,12 +14,10 @@ const CurrentEventScreen: React.FC = () => {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         <DropdownFiller type={0} />
-
+      {/* <Form/> */}
+    <Login/> 
       </View>
-      <View style={styles.container}>
-      <Form/>
-
-      </View>
+      
     </ScrollView>
     </ImageBackground>
   );

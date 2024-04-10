@@ -9,29 +9,49 @@ interface TrueFalseQuestionProps {
 }
 
 const TrueFalseQuestion: React.FC<TrueFalseQuestionProps> = ({ Title, Question, onCheckboxChange }) => {
-  const [checked, setChecked] = useState<boolean>(false);
+  const [trueChecked, setTrueChecked] = useState<boolean>(false);
+  const [falseChecked, setFalseChecked] = useState<boolean>(false);
 
-  const handleCheckboxChange = (isChecked: boolean) => {
-    setChecked(isChecked);
-    onCheckboxChange(isChecked);
-    console.log('True/False Question - Title:', Title, 'Question:', Question, 'Response:', isChecked);
-    // Perform any other necessary actions with the checkbox
+  const handleTrueCheckboxChange = () => {
+    setTrueChecked(!trueChecked);
+    setFalseChecked(false);
+    onCheckboxChange(true);
+    console.log('True/False Question - Title:', Title, 'Question:', Question, 'Response:', true);
+  };
+
+  const handleFalseCheckboxChange = () => {
+    setFalseChecked(!falseChecked);
+    setTrueChecked(false);
+    onCheckboxChange(false);
+    console.log('True/False Question - Title:', Title, 'Question:', Question, 'Response:', false);
   };
   
-  const getResponse = () => {
-    return "meow";
-  };
   return (
     <View>
       <Text>{Question}</Text>
-      <CheckBox
-        center
-        title="True"
-        checked={checked}
-        onPress={() => handleCheckboxChange(!checked)}
-      />
+      <View style={styles.checkboxContainer}>
+        <CheckBox
+          center
+          title="True"
+          checked={trueChecked}
+          onPress={handleTrueCheckboxChange}
+        />
+        <CheckBox
+          center
+          title="False"
+          checked={falseChecked}
+          onPress={handleFalseCheckboxChange}
+        />
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  checkboxContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});
 
 export default TrueFalseQuestion;

@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, ScrollView, Button, StyleSheet, TouchableOpacity, Image  } from 'react-native';
+import { Text } from '../../components/Themed';
+
+import { View, ScrollView, Button, StyleSheet, TouchableOpacity, Image  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CheckboxQuestion from './CheckboxQuestion';
 import MultChoiceQuestion from './MultChoiceQuestion';
@@ -7,6 +9,7 @@ import RatingQuestion from './RatingQuestion';
 import TextboxQuestion from './TextboxQuestion';
 import TrueFalseQuestion from './TrueFalseQuestion';
 import { PROTOCOL, BASE_URL, PORT } from '../../constants/Config';
+import LoginPage from './Login';
 interface PerformanceInfo {
   Title: string;
   Summary: string;
@@ -17,10 +20,11 @@ interface PerformanceInfo {
 const Form: React.FC = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [showEngageBox, setShowEngageBox] = useState<boolean>(true); 
+  const [showLoginForm, setShowLoginForm] = useState<boolean>(true);  
 
   const [performanceInfo, setPerformanceInfo] = useState<PerformanceInfo[]>([]);
   const [performanceTitle, setPerformanceTitle] = useState<string>('');
-  //These are the values that will be submitted to engagementinfo - depracated
+  // depracated but everything breaks if i remove these
   const [checkboxQ, setCheckQ] = useState<string>();
   const [textboxQ, setTextQ] = useState<string>();
   const [multQ, setmultQ] = useState<string>();
@@ -32,7 +36,7 @@ const Form: React.FC = () => {
   const [textboxQuestions, setTextboxQuestions]=useState<any[]>([]);
   const [ratingQuestions, setRatingQuestions]=useState<any[]>([]);
   const [tfQuestions, setTFQuestions]=useState<any[]>([]);
-// These are the values stored in each question
+// These are the values stored in each question - depracated
     
 const [textboxValue, setTextboxValue] = useState<string>('');
 const [ratingValue, setSelectedRating] = useState<number>(1);
@@ -75,7 +79,8 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
 
       setPerformanceInfo(filteredData);
     } catch (error) {
-      console.error('Error fetching performance info in Form:', error);
+      console.log('Error fetching performance info in Form:', error);
+      alert("Due to internal server issues, we are unable to display performance information at this time. We sincerely apologize for the inconvenience.");
     }
   };
 
@@ -102,7 +107,8 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
       setCheckQ(questions[0]);
       setCheckboxQuestions(checkboxQuestions);
     } catch (error) {
-      console.error('Error fetching checkbox questions:', error);
+    alert("Due to an internal server error, we are unable to display certain checkbox questions at this time. We apologize for the inconvenience.");
+      console.log('Error fetching checkbox questions:', error);
     }
   };
   
@@ -122,7 +128,9 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
     }
     
     catch(error){
-      console.error("error fetching multiple choice questions form-side:", error);
+        alert("Due to an internal server error, we are unable to display certain multiple choice questions at this time. We apologize for the inconvenience.");
+
+      console.log("error fetching multiple choice questions form-side:", error);
     }
   };
   const fetchTextboxQuestions = async() =>{
@@ -139,7 +147,9 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
       setTextboxQuestions(textboxQuestions);
     }
     catch(error){
-      console.error("error fetching textbox questions:", error);
+        alert("Due to an internal server error, we are unable to display textbox questions at this time. We apologize for the inconvenience.");
+
+      console.log("error fetching textbox questions:", error);
     }
   };
   const fetchRatingQuestions = async()=>{
@@ -156,7 +166,10 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
       setRatingQuestions(ratingQuestions);
     }
     
-    catch(error){console.error("error fetching rating questions: ", error);}
+    catch(error){
+        alert("Due to an internal server error, we are unable to display rating questions at this time. We apologize for the inconvenience.");
+
+    console.log("error fetching rating questions: ", error);}
   };
   const fetchTFQuestions = async()=>{
     try{
@@ -172,7 +185,10 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
       setTFQuestions(tfQuestions);
     }
 
-    catch(error){console.error("error fetching true false questions: ", error);}
+    catch(error){
+        alert("Due to an internal server error, we are unable to display true/false at this time. We apologize for the inconvenience.");
+
+    console.log("error fetching true false questions: ", error);}
   };
 
 const generateCheckboxes = () => {
@@ -322,7 +338,7 @@ const submitEngagementInfo = async () => {
             // Iterate over each question type and response
       questionResponses.forEach(({ questionType, response }) => {
         requests.push(
-          fetch('http://192.168.11.115:3001/engagementInfo', {
+          fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/engagementinfo', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -341,7 +357,8 @@ const submitEngagementInfo = async () => {
   
       console.log('All engagement info submitted successfully');
     } catch (error) {
-      console.error('Error submitting engagement info:', error);
+    alert("Due to an error, we are unable to receive your submission at this time. Please try again later.");
+      console.log('Error submitting engagement info Form-side:', error);
     }
   };
   
@@ -386,14 +403,8 @@ const submitEngagementInfo = async () => {
   };
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      {showEngageBox ? (
-        <TouchableOpacity
-          style={styles.engageBox}
-          onPress={() => setShowEngageBox(false)} // Hide the engagement box when pressed
-        >
-          <Text style={styles.engageText}>Press here to engage!</Text>
-        </TouchableOpacity>
-      ) : (
+      
+      
         <View style={styles.container}>
           {submitted ? (
             // Submitted message
@@ -419,14 +430,14 @@ const submitEngagementInfo = async () => {
             </>
           )}
         </View>
-      )}
+      
     </ScrollView>
   );
 };
 export default Form;
 const styles = StyleSheet.create({
   engageBox: {
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 10,
     padding: 20,
     margin: 10,

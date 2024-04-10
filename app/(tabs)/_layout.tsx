@@ -1,3 +1,4 @@
+
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
@@ -53,6 +54,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="history" color={color} />,
         }}
       />
+      
       
     </Tabs>
   );
