@@ -15,7 +15,6 @@ const MultChoiceQuestion: React.FC<MultChoiceQuestionProps> = ({ Title, Question
     setSelectedOption(option);
     onResponse(option);
     console.log('MultChoice Question - Question:', Question, 'Response:', option);
-    // Perform any other necessary actions with the selected option
   };
 
   const renderOptionButton = (option: string) => (

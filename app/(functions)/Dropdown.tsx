@@ -7,7 +7,7 @@ interface DropdownProps {
 
   summary: string;
   characters: { name: string; description: string; actor: string }[];   
-  relationalMap: string; // Placeholder for image or other content
+  relationalMap: string;  
   startDate: string;
   endDate: string;
 }

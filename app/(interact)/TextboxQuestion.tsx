@@ -13,7 +13,7 @@ const TextboxQuestion: React.FC<TextboxQuestionProps> = ({ Title, Question, onTe
   const handleTextChange = (text: string) => {
     const truncatedText = text.slice(0, 3000); // truncate text so if somebody pastes text it wont exceed limit!
     setTextValue(truncatedText);
-    onTextChange(truncatedText); // Call the onTextChange callback with the updated text value
+    onTextChange(truncatedText);  
   };
 
   return (

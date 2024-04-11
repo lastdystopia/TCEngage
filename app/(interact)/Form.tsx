@@ -7,9 +7,10 @@ import CheckboxQuestion from './CheckboxQuestion';
 import MultChoiceQuestion from './MultChoiceQuestion';
 import RatingQuestion from './RatingQuestion';
 import TextboxQuestion from './TextboxQuestion';
-import TrueFalseQuestion from './TrueFalseQuestion';
+import TrueFalseQuestion from './TrueFalseQuestion'; 
+
 import { PROTOCOL, BASE_URL, PORT } from '../../constants/Config';
-import LoginPage from './Login';
+
 interface PerformanceInfo {
   Title: string;
   Summary: string;
@@ -17,13 +18,13 @@ interface PerformanceInfo {
   EndDate: string;
   RelationalMap: string;
 }
+
 const Form: React.FC = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const [showEngageBox, setShowEngageBox] = useState<boolean>(true); 
-  const [showLoginForm, setShowLoginForm] = useState<boolean>(true);  
-
+  
   const [performanceInfo, setPerformanceInfo] = useState<PerformanceInfo[]>([]);
   const [performanceTitle, setPerformanceTitle] = useState<string>('');
+
   // depracated but everything breaks if i remove these
   const [checkboxQ, setCheckQ] = useState<string>();
   const [textboxQ, setTextQ] = useState<string>();
@@ -36,13 +37,7 @@ const Form: React.FC = () => {
   const [textboxQuestions, setTextboxQuestions]=useState<any[]>([]);
   const [ratingQuestions, setRatingQuestions]=useState<any[]>([]);
   const [tfQuestions, setTFQuestions]=useState<any[]>([]);
-// These are the values stored in each question - depracated
-    
-const [textboxValue, setTextboxValue] = useState<string>('');
-const [ratingValue, setSelectedRating] = useState<number>(1);
-const [tfValue, setTFValue] = useState<boolean>(false);
-const [checkboxValue, setCheckboxValue] = useState<string>('');
-const [multChoiceValue, setMultChoiceValue] = useState<string>('');
+     
      // responses
      const [checkboxResponses, setCheckboxResponses] = useState<{ [key: string]: string }>({});
      const [textboxResponses, setTextboxResponses] = useState<{ [key: string]: string }>({});
@@ -97,7 +92,7 @@ const [multChoiceValue, setMultChoiceValue] = useState<string>('');
   const fetchCheckboxQuestions = async () => {
     try {
       const checkboxQuestions = await Promise.all(performanceInfo.map(async info => {
-        const response = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/CheckboxQuestion?Title=${info.Title}');
+        const response = await fetch(PROTOCOL + "://" + BASE_URL + ':' + PORT + '/CheckboxQuestion?Title=${info.Title}');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -210,7 +205,6 @@ key={index}
 Title={question.Title}
 Question={question.Question}
 Options={[question.Option1, question.Option2, question.Option3, question.Option4, question.Option5, question.Option6, question.Option7, question.Option8]}
-//onResponse={handleMultChoiceChange}
 onResponse={(response) => handleMultChoiceChange(question.Question, response)}  
 
 />
@@ -222,7 +216,6 @@ onResponse={(response) => handleMultChoiceChange(question.Question, response)}
     return textboxQuestions.flat().map((question, index)=>(
       <TextboxQuestion
       key = {index} Title={question.Title} Question={question.Question} 
-      //onTextChange={handleTextboxChange}
       onTextChange={(response) => handleTextboxChange(question.Question, response)}
       />
     ));
@@ -337,7 +330,6 @@ const submitEngagementInfo = async () => {
       .concat(multChoiceQuestionResponses)
       .concat(tfQuestionResponses)
       .concat(ratingQuestionResponses);
-      console.log("kdskfkdf", textboxQuestionResponses);
             // Iterate over each question type and response
       questionResponses.forEach(({ questionType, response }) => {
         requests.push(

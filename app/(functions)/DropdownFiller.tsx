@@ -25,7 +25,7 @@ const DropdownFiller: React.FC<{ type: number }> = ({ type }) => {
   useEffect(() => {
     const fetchPerformanceInfo = async () => {
       try {
-        const response = await fetch(PROTOCOL + "://" + BASE_URL+':'+PORT+'/performanceinfo');        
+        const response = await fetch(PROTOCOL + "://" + BASE_URL+ ':' + PORT + '/performanceinfo');        
         if (!response.ok) {
           console.log(response);
           throw new Error('Network response was not ok');

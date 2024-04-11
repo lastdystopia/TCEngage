@@ -5,7 +5,7 @@ import { Icon } from '@rneui/themed';
 interface RatingQuestionProps {
   Title: string;
   Question: string;
-  onRatingPress: (rating: number) => void; // Add onRatingPress prop
+  onRatingPress: (rating: number) => void; 
 }
 
 
@@ -14,7 +14,7 @@ const RatingQuestion: React.FC<RatingQuestionProps> = ({ Title, Question, onRati
 
   const handleRatingPress = (rating: number) => {
     setSelectedRating(rating);
-    onRatingPress(rating); // Call onRatingPress callback with the rating value
+    onRatingPress(rating); 
     console.log('Rating Question - Title:', Title, 'Question:', Question, 'Response:', rating);
 
   };

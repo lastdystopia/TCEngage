@@ -5,8 +5,8 @@ import { CheckBox } from '@rneui/themed';
 interface CheckboxQuestionProps {
   Title: string;
   Question: string;
-  Options: (string | null)[]; // Change to an array of strings or null
-  onPressChange: (response: string) => void; // Added onPressChange prop
+  Options: (string | null)[];  
+  onPressChange: (response: string) => void;  
 }
 
 const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({

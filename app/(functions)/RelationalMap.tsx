@@ -10,8 +10,8 @@ const RelationalMap: React.FC<ContainerProps> = ({ imageUrl }) => {
     <View style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContainer}
-        maximumZoomScale={3} // Adjust as needed for maximum zoom level
-        minimumZoomScale={1} // Adjust as needed for minimum zoom level
+        maximumZoomScale={3}  
+        minimumZoomScale={1}  
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc', // Gray border color
     borderWidth: 1, // Border width
     borderRadius: 10, // Rounded corners
-    overflow: 'hidden', // Clip image to container bounds
+    overflow: 'hidden',  
   },
   scrollViewContainer: {
     justifyContent: 'center',
